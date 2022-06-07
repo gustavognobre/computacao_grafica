@@ -1,0 +1,4776 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    173691,       4768]
+NotebookOptionsPosition[    172725,       4744]
+NotebookOutlinePosition[    173098,       4760]
+CellTagsIndexPosition[    173055,       4757]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"<<", "Quaternions`"}]], "Input",
+ CellChangeTimes->{{3.863154965750041*^9, 3.8631550151606407`*^9}, {
+  3.863156489931972*^9, 3.8631564944945984`*^9}, {3.863158361519924*^9, 
+  3.8631583620238824`*^9}},ExpressionUUID->"55b756fb-83f2-4b70-a466-\
+eb3fea27c174"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mandelbrot", " ", "=", " ", 
+   RowBox[{"Compile", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"x", ",", "y", ",", "p", ",", " ", "q", ",", "lim"}], "}"}], 
+     ",", "\[IndentingNewLine]", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"z", ",", " ", 
+         RowBox[{"ct", "=", "0"}], ",", 
+         RowBox[{"ct2", "=", "1"}]}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"w", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "400"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"u", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "400"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"r", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "400"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"v", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "400"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"z", "=", 
+         RowBox[{"Quaternion", "[", 
+          RowBox[{"x", ",", "y", ",", "p", ",", "q"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"w", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", " ", "x"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"u", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", " ", "y"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"r", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", " ", "p"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"v", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", " ", "q"}], ";", "\n", 
+        RowBox[{"While", " ", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"Abs", "[", "z", "]"}], "<", "8.0"}], "&&", 
+           RowBox[{"ct", "<", "1"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"z", "=", 
+            RowBox[{
+             RowBox[{"z", "**", "z"}], "+", 
+             RowBox[{"Quaternion", "[", 
+              RowBox[{"x", ",", "y", ",", "p", ",", " ", "q"}], "]"}]}]}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"w", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "=", 
+            RowBox[{"Re", "[", "z", "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"u", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"List", "@@", "z"}], ")"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"r", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"List", "@@", "z"}], ")"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"v", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"List", "@@", "z"}], ")"}], "[", 
+             RowBox[{"[", "4", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"++", "ct"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"Abs", "[", "z", "]"}], "<", "8.0"}], "&&", 
+           RowBox[{"1", "\[LessEqual]", "ct2", "\[LessEqual]", "lim"}]}], ",", 
+          RowBox[{
+           RowBox[{"ct", "=", "ct2"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"xn", "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "epsilon"}], ")"}], 
+              RowBox[{"w", "[", 
+               RowBox[{"[", 
+                RowBox[{"ct2", "+", "1"}], "]"}], "]"}]}], "+", 
+             RowBox[{"epsilon", " ", 
+              RowBox[{"w", "[", 
+               RowBox[{"[", "ct2", "]"}], "]"}]}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"yn", "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "epsilon"}], ")"}], 
+              RowBox[{"u", "[", 
+               RowBox[{"[", 
+                RowBox[{"ct2", "+", "1"}], "]"}], "]"}]}], "+", 
+             RowBox[{"epsilon", " ", 
+              RowBox[{"u", "[", 
+               RowBox[{"[", "ct2", "]"}], "]"}]}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"pn", "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "epsilon"}], ")"}], 
+              RowBox[{"r", "[", 
+               RowBox[{"[", 
+                RowBox[{"ct2", "+", "1"}], "]"}], "]"}]}], "+", 
+             RowBox[{"epsilon", " ", 
+              RowBox[{"r", "[", 
+               RowBox[{"[", "ct2", "]"}], "]"}]}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"qn", "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "epsilon"}], ")"}], 
+              RowBox[{"v", "[", 
+               RowBox[{"[", 
+                RowBox[{"ct2", "+", "1"}], "]"}], "]"}]}], "+", 
+             RowBox[{"epsilon", " ", 
+              RowBox[{"v", "[", 
+               RowBox[{"[", "ct2", "]"}], "]"}]}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"xn2", "=", 
+            RowBox[{
+             RowBox[{"xn", " ", "xn"}], "-", 
+             RowBox[{"yn", " ", "yn"}], "-", 
+             RowBox[{"pn", " ", "pn"}], "-", 
+             RowBox[{"qn", " ", "qn"}], "+", "x"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"yn2", "=", 
+            RowBox[{
+             RowBox[{"2", " ", "xn", " ", "yn"}], "+", "y"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"pn2", "=", 
+            RowBox[{
+             RowBox[{"2", " ", "xn", " ", "pn"}], "+", "p"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"qn2", "=", 
+            RowBox[{
+             RowBox[{"2", " ", "xn", " ", "qn"}], "+", "q"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"z", "=", 
+            RowBox[{"Quaternion", "[", 
+             RowBox[{"xn2", ",", "yn2", ",", "pn2", ",", "qn2"}], "]"}]}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"w", "[", 
+             RowBox[{"[", 
+              RowBox[{"ct2", "+", "2"}], "]"}], "]"}], "=", "xn2"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"u", "[", 
+             RowBox[{"[", 
+              RowBox[{"ct2", "+", "2"}], "]"}], "]"}], "=", "yn2"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"r", "[", 
+             RowBox[{"[", 
+              RowBox[{"ct2", "+", "2"}], "]"}], "]"}], "=", "pn2"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"v", "[", 
+             RowBox[{"[", 
+              RowBox[{"ct2", "+", "2"}], "]"}], "]"}], "=", "qn2"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"++", "ct2"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+        "ct"}]}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Off", "[", 
+  RowBox[{"CompiledFunction", "::", "cfex"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.8631550329260483`*^9, 3.8631550329302087`*^9}, {
+   3.863155161480163*^9, 3.8631555859716616`*^9}, {3.863155620592128*^9, 
+   3.8631561986798534`*^9}, {3.863156240465004*^9, 3.8631562674334965`*^9}, {
+   3.863156298499444*^9, 3.8631562993587484`*^9}, 3.863156352126542*^9, {
+   3.863156396989477*^9, 3.8631563977861776`*^9}, {3.8631564371165223`*^9, 
+   3.8631564410696917`*^9}, {3.863156517948938*^9, 3.8631565556563997`*^9}, {
+   3.8631566340017433`*^9, 3.8631567055983543`*^9}, {3.8631569072294035`*^9, 
+   3.863156907595544*^9}, {3.863156978299919*^9, 3.8631570031951537`*^9}, 
+   3.8631570501287174`*^9, {3.863157116173128*^9, 3.8631572167296205`*^9}, {
+   3.8631572632318363`*^9, 3.8631572647995872`*^9}, {3.8631573853407145`*^9, 
+   3.86315738696035*^9}, {3.8631581581674013`*^9, 3.863158194981656*^9}, {
+   3.8631582356457872`*^9, 3.8631582986979113`*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"42eedf99-709a-45de-aaf7-45deb0f6e2c4"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"vg", "=", 
+   RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"For", "[", 
+  RowBox[{
+   RowBox[{"epsilon", "=", "0"}], ",", 
+   RowBox[{"epsilon", "<", "0.5"}], ",", 
+   RowBox[{"epsilon", "=", 
+    RowBox[{"epsilon", "+", "0.1"}]}], ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gus", "=", 
+     RowBox[{"DensityPlot", "[", 
+      RowBox[{
+       RowBox[{"mandelbrot", "[", 
+        RowBox[{"x", ",", "y", ",", "0.5", ",", "0.5", ",", "100"}], "]"}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", "2."}], ",", "1."}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"-", "1.5"}], ",", "1.5"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", " ", 
+         RowBox[{"ColorFunction", "\[Rule]", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"Mod", "[", 
+                 RowBox[{"#1", ",", "2"}], "]"}], "==", "0"}], "&&", 
+               RowBox[{
+                RowBox[{"Mod", "[", 
+                 RowBox[{"#1", ",", "100"}], "]"}], "\[Equal]", "0"}]}], ",", 
+              "Red", ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Mod", "[", 
+                  RowBox[{"#1", ",", "2"}], "]"}], "==", "1"}], ",", "White", 
+                ",", "Blue"}], "]"}]}], "]"}], "&"}], ")"}]}], ",", 
+         RowBox[{"ColorFunctionScaling", "\[Rule]", "False"}], ",", 
+         RowBox[{"Frame", "\[Rule]", "False"}], ",", 
+         RowBox[{"PlotPoints", "\[Rule]", "10"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", " ", "All"}]}], "}"}]}], "]"}]}], 
+    ";", "\[IndentingNewLine]", 
+    RowBox[{"vg", "=", 
+     RowBox[{"Append", "[", 
+      RowBox[{"vg", ",", "gus"}], "]"}]}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.863158305953881*^9, 3.8631583214259467`*^9}, {
+  3.8631584462966805`*^9, 3.8631584496051493`*^9}, {3.8631584833796654`*^9, 
+  3.8631585288611*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"6f1b5f99-23a1-4378-8d2a-d0fcd9fce61f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "vg", "]"}]], "Input",
+ CellChangeTimes->{{3.8631583876749783`*^9, 3.8631583963678093`*^9}, 
+   3.863158542947986*^9},
+ CellLabel->"In[15]:=",ExpressionUUID->"dabe71d9-d89f-42dc-8473-87c310941096"],
+
+Cell[BoxData["5"], "Output",
+ CellChangeTimes->{
+  3.8631583970387383`*^9, 3.8631584664052196`*^9, {3.863158515750492*^9, 
+   3.863158543552555*^9}},
+ CellLabel->"Out[15]=",ExpressionUUID->"e51ebb88-db59-4600-a753-e8786d2e555c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GraphicsGrid", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"vg", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{"vg", "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"vg", "[", 
+       RowBox[{"[", "3", "]"}], "]"}], ",", 
+      RowBox[{"vg", "[", 
+       RowBox[{"[", "4", "]"}], "]"}]}], "}"}]}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8631585479705806`*^9, 3.863158584711263*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"5c283b24-1cf7-44b5-87e3-084ecc219757"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{InsetBox[
+      GraphicsBox[{GraphicsComplexBox[CompressedData["
+1:eJx12k2LXEUUxvGOBr+HH0TuwpUgKFGjKAgK4kr8UhI0vtIgZNHQvXGtGzdu
+lIAkDDTezvQ0k5iJmr73d5rzJM5iLv8+daueejmnTlX3yx9/fuOTFxaLxa3/
+/j19zn+b6XG5/vr2079Ha3zznad/F8XXjs+x+L2j/c/iD478a/H0vLPCb0z2
+Ad+Y3h96+TF4sZl0PSh9mD5MH6YP04fpw/Rh+nr5MXix+ebIZ6UP04fpw/Rh
++jB9mD5MXy8/Bi8201z/UfowfZg+TB+mD9OH6cP09fJj8GLz4bHcT6UP04fp
+w/Rh+jB9mD5MXy8/Bi82r0880Ifpw/Rh+jB9mD5MH6avlx+DF5u//3n693vp
+w/Rh+jB9mD5MH6YP09fLj8GLzZfTeix9mD5MH6YP04fpw/Rh+nr5MXix+Wry
+59KH6cP0YfowfZg+TB+mr5cfgys+DxGfh4jPQ8TnIeLzEPG59OGIz0PE59KH
+v5njIB2PYt3N5fjVWnn8bY9b6xePz4oT69f6uq/68Vd9XmcdV+t3e7+LtY+1
+j7WPP5raL9Y+1t77fVyLtYe1h9WP1Y/1D2vvzT5PxdrD2sPGE2sPaw9r762+
+Doq1h7WHjSfWX0wPpifbuzp+/le1h7WHtYfVj9WP9Tfrf3tav1UeG4++vheb
+XO84n+zyB/rY+R9mV57eXt849Hauyn96vDj5R+Yf6X/s5ou9x4uTf/IH+rr/
+LTZY/El/6/5zZ5X+l/kFu/a9L16lv2b+kXp7PmT8liv605/ZjR97j1/ev7NK
+f2fXH/Ye75Yr/cn40Osfh4w/qR/3dbOsvFw+0ePxcoXZ9a/HH+thudK/jCep
+F7NnPpP1Y/VnPpLxjd14ZX7S619sxBvzia3XjGeZf7DTk/FNef3N9jKeiTf6
+m/Eq4xHWHywfwNZTLz8W9/m6HLo/XMZ+e1nrVbxgx8aLfymf/ibf5l/Y+9h4
+YPVh853nCeut50fLlfqtP/Vn/p3rN/e7zP9yvno+WeMZ+djpXE2/+vN8k/GC
+Xv3P84b1rr+Zv6e/Zv6vP/vj8+f58/36h2P53+Z5uzv7xd0h+dVj/T8On03P
+9a3pvXndbQf8ylxuGqfd+ov5c/W9dGz3l/X3c7vqw8onX5/f0x679g5zvzA9
+3mfXH8yu/JPj5/eKv4txMF5Ye1h9add/9U/+c7/6g5XP/vM360N9yn86jyM2
+X9M8PFyzT/50WGd5/mF+9N/6yfm13ujL+Jzrw3hM8XI7j8P50Pfv+7O+J6WT
+/9j3sHyKP7BjdvGg75t3ah+lT3vm9+asE9NnvRp/bH74Fzs2n8YB66/1TR+7
+9YKNL742+7H55HfYeGPt48/ic3rNH2b3zPnlT9ZP+ot+4Bvze/qjvPmzn4mP
+2Hjdnuar9l92+zemT3nxMs+71ov1lfd14rvxsD76/jKGf57Ffepypf/8s9e/
+XKmf3f6X57m8H8rzZN4X5fky74/yvJn3UfZL7eX5Lu9/8nzJrn7MPzO/yvsl
++5f687xnf7Z+cM+HT/cr/V73Qe3b2HoQ3+yXcW6rOMXvej1ncd8+VjlP7fXz
+3PaZ+JP7KTZe9PIz9s7byqf6+e5xxTfrK++Xlddf5fU375/7/cquyutv3k8r
+r5yn+VPefiy+Wj/GT/zJeI37fnrab3o8fhTn2cdlNx7sxqPbH1Y8Nx79/me3
+zvh9PXSzWw/s9Iq/2hd/jW+/z96XXX1YfeIv/dj7uX9j422diYf8P/cN8bHH
+i33tB+rHxgOLl5nPstsv8n5WeTqUpyfvb5W3fyivn9Pnu/Cz86of9/O++1ff
+hx3ivuCy8jF2/cM9X9vH/rSP/eki/HoXvC1/ej7vir3X861tnA9P/sbezwPb
+8k/+K77xf/Zk/t/9/ZRfaR97n7/nfRL/Mr+Zn2Pxtedfi03mb/y738ed9nv5
+lvG0vxsf/o3Vpz+Zvymvfz1fOFT9/CvPA8nigXWY8UJ5LL7oj3hkvuQPfX+/
+W/6pvPlIVt785H1P5pfijfYxfeYV82frlx2zG392452sPZ/3OHBveP65b1d6
+ksUf5cUT4397mufivA9iN37mta/vs7gvvlvr0/o2vtj8pd169H6y9au9PH8o
+b/6Sszw2P8rTl5zno+4fYzF9mH7+oL+YHuXpTc7y2Hwor37rQXyZ5y+5+sPv
+Y7+p+MDefx9xiN9DHOI+6PT9gfyyx3f5rvP0ruqbnxVfxf8eb88qfj4/nv9R
+cSN/b2B+7e+Zn5lv84v5k/HGh9bu/Ypv4r/7O/OlPu1j+sQz4yUe6h/Wv7w/
+oad/X573T2e1vsQr5TN+WU89np1XPBUvjBd7xI/SO/G+9jvz2/P8s8grt5VP
+Z/6KrSOsvm6/qviI++8TDv97Durx9F7NT8/rTnkeP+rx9XLd74N35a/q7+O5
+Xxsv+63xuNY+35adP7Bj8R47r/TxeFjzL5+gTzzo+etF9U975l95/ennz4s4
+B44V75Pz91D6238vVe89k3/l/jSVW67MU8aDvC/u92vjM/Z+Pruo+GC+e750
+te6/J3oS+dNik+cr+Uu/Tz4rf5Q/GM+83+B/1lv6K+7r8fR9UObr4iU2HuJ9
+cu7f+sdufDC7+WCP+5haz/yWP1o/4kX3x8e1vr3X98tDrd++L+3Ln5Tr9z2H
+2o/6un5c67N//376XoA++2/GH/NnfPL7QfFEPPdev7/elb94v9+vnvrbf1f5
+pM5Txtd48Uf19Xh4PvwLg1NtFw==
+         "], {
+          {GrayLevel[0.8], EdgeForm[None], 
+           GraphicsGroupBox[PolygonBox[CompressedData["
+1:eJxN2wn8p1P1B/DneZJ9HftYB1kisg+yzNj3pawpxjr2nbIvRbKMdTBlX8rS
+oggtDEKi5F+IyJJSlBaVRPmft/v5vfR6zXndM/d77n3uc597Pme7vzF7HLLd
+wUPXdW9O03UfqPaiIv+fueiaYsYUHdl33apFl1ffl4tWKP6D1c5WtErxKxdN
+V/x91d5TNKX4S4omd23OT1TfPtXOUHRl0RWZ/8M190HVzlW0X/H3l9zVxX+2
+2s8U7Vv8itVOW+3sRScV/1a1+xftXPyB1c5ZdG6NXbrouuJ3rP4Dqh1VdHX1
+XVW0VfV9vuhzRQdX/1nVfrHoUGOrPafosOJ/Uu3qRV+1/monFx1V/GXVXlp0
+dPFfLzqyaCFUfd+s9oaiC4u/qdojio4v/riiifar2i8VHVP8x6r9XrXHFk1X
+63qn2huLZqn+O7x30ReKP6PoEPtU7e3VfqboqJKfvf7/g+L/XPQt+1e0VvXd
+Ve3XipYofmq1dxeNL/4v1d5W9Ezx91X7kaLni/9U0Xfto32pdj37W/M/UO2d
+RRtU/xvVft8eFj+h6ITif1T0UNFKRbtV3/G+f9H/FZ1eNK5oz+o/sdrViuar
+Od+t9of2tujkojV975Lpi04pftWS2bv4k7xXtZsW/az4ib5XtesWLVgyj1T7
+YNG+1X9atet4bvGPF91S/F+rna/o59652m8XnVf8zb6L7138FtX+0zcvOqHm
+3Lj+/2Txy1b792p/WXRo8WdXu1nReSUzoWibokOq/6zq27Row+Kf8K2KTqzf
+vlH/f7r4X1X7yaLvFH+Htuj84m91Toom0Ydqf1XtlkXPFW1XtGvRu9W/bdEz
+xV9gT4p2LDq16K7qf945K/76oi8XbVC0XfVv7VsWveAMFr1Y9GzRLkUXd02f
+Z+qajtIhujS1b3p7Wdd0mz7PGl2j03R7cnQUFnxyaPq8t+9S/DHR8RNzzvfr
+mk7PnWftOjQ9p7+P9E0v6SQcgB90dn/nLfpOp68tGl30qaHpPt05bGj6clzR
+PTnzK5Ot/o8UfaX4Tw9Nr+nLbkPTHXr982pnytl4sm96S09/Wvyj0fEForPX
+F+0+NEyAAzsGWxYserr4tZ2n4meNztLTy4MJ9PrK6Dg9Pa1v2ATXpgRD4Mav
+q30uej5bdBYOzDg0HYcD/dA23Ld+uW96Tpffzhl2Pl+JXtPnQ0v22b7p93Gw
+rtofRzdPiI68GH2nywsNTa/p8OihnVX6/qFqF+ub/k+I/tK7ufumt/T0D33T
+U7q8ZN/0ekQf6ekmXdN9erxe0TzR8VOLf7xrOrtx0dLVN6pv+uy8w+bdiv9N
+sAtevdE3TDmj6G/F3xi9pnNnRncOiZ5+PDp7jvPVNV3dNs+iu2dFx94qmX9F
+3ycG9+jyf4v/T/R3m2p/Hb3cc2i6Smf3Gpr+whOYCevgAyyhyzt0TVd3zbPo
+7gXOctGdwSI4cF7fbM3hXbNL9Hj34i+KfrGVL3RNf/d0PvqmQ/MWXTw0uaOq
+b/FqFxuaTd2k2u37xu8bTIADl0b/6PDR0adZik7um7zz/cNqd4j+nhCZ+You
+HNoY+v5gtSv1zebuVO1vu6bLPyp+taJrnGHnP/1vFv9UvtPmNc8uedZpxS9b
+9LviJzurXbPFl3r3otOzlsOyhknhF8/aDs0+nB1+sewPvZ+n6KN5Dzj2cPEP
+ZW2LVjtt0TeKv8B36JuN/lm1Y4tuLv7Uak+Jzn6w1vLB4l+x531bFx/gD11r
+2dyL+vZe/IAzo9+LFv27a/yyWSdsGFP0dtewgf3d2neLnkwKZniXmbMW2PJC
+8a93DR9OL/lZiv5Y/C/gdN5lDue2azb1qeLXLbrVePg5NNv8O9+r6F46U317
+BBeOKH71oeHqtfYpOn9dtfd3bW1bOJt9m2er4veKzJnZc+/1x+I3Kvop3SuZ
+A6MbD3dN79cq+krfxtK3P1W7SdFjxc9Q7RB8uKFva4Mj1/ftufBiEl0eGj9n
+9f23a1i0XfXtF/lXu7bPyzkf1df1DTe+2rd9tp6Pl/wBWcM/qt286BfFz5+1
+O6uvFb9Z0aPFb88v7Zt9f73a0VnzlOq/rOgW680a4Mv5xe8UrPla354Fmxau
+vsP75m/QCVgCu96pvn90DbP+Wfzfs56dS/6wjP163/aTzPrV/61g0T6RgS+3
+B5N2pkvBmK2LvhcMgCG3RGYrZ6XGnjS8P5bMTnS2a2P5DPTyiuiU9srw3y/5
+5fvmU8Ap/gFzdWl42HJ3/f6DvvkV0wQTLsvv5GAR3/7SyOu/JLy5f9M1f+Xe
+vo3nY9BLPoMYYWrmnKNrWIPn58+UceZfYmj4aKxxl2fszHkfsi/nN/HIuL6d
+IXZn37wvWTrOd+ADiB2uyj5sOjTcvLr4HwdP+C4HDu3/fJ0lhxZHwJ8ri7+i
+aKmhYalxfKwD4v+QWWZoGGrs5Pg1fKk1q+/3XfNPPlL8gn3Dz8+VzLRDw6jf
+5vcFig4KdvFtLkjLpzqk+p8IPvAf+YwTsh9X5VnmuCnzPNY3HwkerdG3+AQP
+R/lRS3VtLXhx0PQ158JZ66ji5yj6U9ZvD5e0h9U3Q9FrxS/SN98MjsFVft0y
+znDWKaZ6Muv1LDhtbR8qWmFocZSxcM5YMcgv+4bX/LTZM3bpol375ueMte/x
+eZbv2v7xu9iXeYYm99eu4etdWTPc5a+tUHTG0MbD4TOrnb/ob85KtTPlvby3
+sR8tmrP4MX3bh2OKfyk4vOLQsJpf++lguFhsnb7toefB/u9nnsX7Zlf4gdMF
+A/125NBwXDx4ytB0+/ns5T3Zz5WGdr6nds2fvDd7dXX4VYu+UDLzDu3dYSf/
+bnzR7/vma7IHqw0tTsOv3zd7xv88fGi2yrvYD/7jGl3Dfz7mx4q+WP0LZK+m
+D77yG4/OnlibfXog+2zcjzKWv2oudmRsbJbfxYgPR+bYodk8fu9SfXsG33Kt
+ocVpnrfe0GI/GPtq3/xX/WwX/3YDcw0tHmQP5ky/WHVU+tbvml3gg8LwZfrm
+H7MLH+6bPRO3soN81827Zo/w44rWHlosSp794c9uUXT80Pxda/tL3+wff3nd
+odkjcqtk7+05m/VE1nNd9V8+NB+UDXsqa1su9kUsyXY9mXcUh5JhC9ggPu/2
+Rf/umy0WX+wwNFuCfzNjyf898t5rjuyxb8128FfZoHGxm9azi/PZtzV8vNqX
+Ise35mPz0bfL//H/Cs+H3mho7+A8s1EvdM2WPRves4ahzfti+l+KzDRDi8Hg
+5HJDy9HgxaGwEr49Hh62sxvsDlv2gaHludgHvjp8hQ90Ck7x/RYIzsGi5YeW
+f/H/GYMBfLzpgs1LdC1OZF/4hOPD81XElOakp+/me/kWfAZxhZhi9uANvXgu
+WIJ/Pjx8mLtk5hpaTLjy0PTzL1mz+JG+w5A/Z/1iz9czVr7CmuHhs8G/1X3X
+oembWHF0dBd+Lhjed581azN2vuDH2JwfuZRtuua7eC9x2VlDwy9zstvsHTs+
+fmjnxjuP5Ee2zDd1tvgkiwwtNnNGrgz+2EP68Hb2fEpw0jsuEd6ei1HkF9hB
+dhgvD8IWvZP1zxVchTOLBZO948ld4+GA+Bc+0mW++jv5vvBSLAwz4dy72YcX
+M6ex1+V9+SziwTdzhvm+YmTPnSc6uGHX8lH4jbqWk2TTxYzOFN5z5Vr5SJdl
+P/F8IZhgD3fsWj7Mmq2NrWa/xSywEU7CEN/Dd2FT/hveevjpfdbD5hrLFv85
+WGftQ3jrhAfmhO3Oo5iCT8X+s/XsKTvB9ok73sk+indez7kU77CD/A36xU+Y
+NWPZ1Vkjwz+ZOftwV8Y6z+v1zfYvnX2dK+8i5wCzfM+nImMNfJpZsga2Y1T2
+BPazAad0LcYZlbH/Tb9vKlcmLp4t/XNF/k+xC6dkDfNkD4fw9o09mT/PeiI8
+/Ib58+V7+W74M8LPm7PnPHoX55MNgu8b5PvyyeS43vPjsoe/D3993mvuyL+V
+sfKi/C04uXDX/MyFMg8sNedCmWfhzCmXhf9avu0i+UZ48TbfzJ7Z00dy7hbN
+2YNb7P0KeRf6xv+RgxoT/oH0r5F5ls7+02lYRsf5NvR82ch+KGPHhDfHnyN/
+d3R0yezt9Fnb+plzicg8GhlnmN2eN/s/R9bgXc6p5549tJyps//hnH97Zu/Y
+Gvvq27D1W/ZNn8n0sWvP5DzoZ2dhpP5P5Pssk2+0YOa8IWd/keytXMcKOXvi
+MbETO7bo0Pi+a7+Tkw9xTp1XuHd/+o2dNudYvveknGcyajnyxX4Xt+DnSN8q
+4e8OT1acId6BsXIveHgFa+Gv3JGYaLXIfCh2dsau2Vr8l3Nu+fryM2zrmjlX
++sQhI/q6Rs7hiokF4JK+semHCWtl7PSx0c6qesGa0QX+3kbZZz7OxuHZZLb5
+qDwLHt2Rs79O5p/aNb8avrG57Dp7BFdgEJ/81cg4n2KRdbNOORxrPjYy4zMP
+HNgwZ5L9ZsfZN7ZYPWZF331oa+MzvB0Zz5W7MPYL0fGNoi9w1VjYLs8k3mEr
+f5r3hTn2XV5eLMxHhfvwap2h+dl8bP4zn5W/Oj6+NF5udrM8V/1l8+gL39xY
+WPdqZOidXIex8iETuhaH7tG1HIk8MP9HLhi/e9d8SDlifXSFLvEtNow/8Mmu
++QR4vqMciTnZPngDj2AOHPZep3TNn5Qjlfd4sWs+JF9j4/iTe3WtriEXKQ+5
+2dBqhP6v7iF3ys7KaeLVMuRgPxHe2rfNu8iXqiXwM+UYd46MPr/xB34buQWz
+H9tlT07O2JFn7RKZI8PDZPnVncP7zr63cyLGFc+qQx2WuEm/c6AWwFbKqcmz
+rZM+sSj8lPfbLf1yh3g+pN/JsX3qDMau3bW8opqBeoHcphrBuK7l5vZIvxwj
+GfHmfzKXeeQV1QzW61pubq/w8pD61RBPTL95TotvL087b57FX5Xj2yfPlTNU
+k1CPkFfcN+8iByh3L28vN7h/nmWd+0X+rPDqAnKME8OfkHdZJ+s8IP3iHPHO
+llnDgZlfPRAvVjopa/OsszOWjJqOOEu+7o7wfGa1joOiX/KK6hxqHPKKh+S5
+8oRqHuyF2uBh4eXV5Nf2zbMOy1j1jcNzJuX21fzYBfVx/WKNLvHap7tWv5Nb
+l+86J/LTdK0OqC4gX3dv9GFU9ACvBuG+wFGRtw61vHnTfjZj1cePzhom5jf9
+csUT863VwY/NWHpAH+iBeuPxGcu+sFts1n75Tf/RkZmYvhOjy2qLJ2ROdwBO
+SP+IHH6HyJtPDvbQfC84eUr0d/usx7uzmdbAxh0UGflGenladFPfqRm7c3iy
+6h5ql4t2Laf+uey59vPhr+oar1ai5qkesUjX9sYeGacGembmURs5I+94RmTw
+7jOc/j/P8tuYrt1tODO8+unZ4dVevpg90Z4VXl1FDWv+PMtvi3XtnsPZ4Y0l
+M1K7MZas51sH26pOon7KPqq9TspYdx4mZaw5zguvbiunyTfgJ7hvsUDa88Of
+Hxk+hjqOsYdnnnOzZjIXZh7rUJ/lT6oXy/kemXVenH3eIWO90y6RWTDrn5z9
+nJz3wj+dseZWO5Dz4WMfk/e1t7BTngd+2nvfYGS+KVmPvbSnI+Muz16x41/K
+Xn0pMnh+7JTMc0x+4xvwMS7PPGsODbs91x7b65H5roy8mpH8IMy7Pd9j8azZ
+WPWgCZGB5/yQKzOP+qp6w1ZZ82V5X7HgtZGfEB6uyzHCejgPp+E1PIb3sAAO
+yIXZK/Zqj8jA4T0zFr6qHV+T+SdmLJxWq1E3h7HwHu7DaTk1OAtjT8z6rGGf
+yKzXtZyYsXyhm/Id8bDZWD7PtTlPzttteXfPktv8TdbDDsARGKKGfGv259D0
+nxOZb/Tv13rI8U/gPdyH5edlvLFyeOaRL3H3Qy1n58h8O7z6NX+ILyRvZ372
+6PzIWKe69u15lr7b0n9L+Pee2bWc/A0Z606LnAx7xW6NzHdnniu3cWf61aPV
+ovgz4hI1pPr3Xg7vu5H3fDy/TN6PPWPLNsj6rc2dMnWl6bsWc6gDzRFeHCIH
+ou5zT2S+k7Wxpz+IjDhFnmRq/359ig0bFZl70n9M+qfkuff9j/x96XdXTQ2I
+jVD3kVuEP+Kq+9O/WWRgDhuh9iPmUj96IP1q6Hi2gx9oHj6huzEPph92wVw4
+RtaYa7rW93D61ZIeypyrp/+anM0fZ22rZaw53ZfT7/zyEey5mqD6kbqPvIoc
+qXhJrCTnJA8lzvO72vnNedZPsgb9MBquys08FpkL0j8y9rHMb45HIz82c+Kv
+7toe2qs1s4Zbsj+PZz23hIfDfHzYDbfFVeIrMfJF6Sc7a/rFXLfmPMsRyZmo
+M4nL1MiezDkXq8kTyRHNHt44dR53bcRQfGz5U/lDeA/31Z5Wiczq6VeXYkfW
+jgy7oGZkLP9cXlc+RXyqDvVs+u/Ib/Ikaklyvvxzcz+b+RfOWLJ8czJ8ezW4
+5zInhZO7HLm3Ix4bH3k5Sn64/BVefDC1a3UZ+RB1q5fD39u1eEAsAC/hm7hV
+juXl9N+bsXBPru+F7LkYwlg2RU0J7sNbNoS9MU4e+5X0v56xK+aZv8vY6zJW
+LWTvvNe4rv3fWPEyX9edHjHmZnlfeR2YqZ4BP8XKr/Xv14Dk+E7uGsaz2fI2
+4le5TjGsnMyf0j86Mmz6qIwVT28SmVO6lhcy9mdZgziZzZHPEyeLkTcPr18N
+SH0FPrN16kBstBzUG+l3b+GNjL0xc7JB4gk2YtM867X0kzVGXcnc/8yebBFe
+P3v9Vt5ldHi5kCfzm71y5+FfkXFn0h7KG9jjv2dOuSz2kn2Uy1JbEmuwm+Ic
+NuXg8L/Mu/8j73JTxup/Ot/PWHHJfzK/O5bmZB/Vr92DZNfUHMS5Y/NcdRS5
+NXGMeAYvhyaPKS+nrx/er0mpIYn35Z/UfuSj1FLJiYNOy1g+PAzkU8I6uWv1
+A3f2+EjThj8vMvL08nme9Xzk1YTgnlyUnJR8qjr+dBm7cPrprDsD7jPD59fy
+LDijhj5j5F8LHsEi9wDx38mzZo28u0P4zwZPZgn/x/ArZI6ZM/aVvMvikZkt
+88jZqm3DFnnV2Yf3a+L4O7MPMw7vY+Ns6TduVN4LJuHNd1d+0y9nC+Pg2/Ph
+yciDqSXcFv2GEfrUlNWiRmoN+lfLWZgn7wIf5Ajg3rPp/2vOjH74qSalxqxG
+ID+sjjU27zh/1u9dRqdf3X90+tXN58v8amILREaO2NrWSP/84d+NjDXDfnvu
+G8qVWcNDOYdyo+6syGmpe8lxuXPrTss+0Qs1QjE7n0rOV/3Sb+4EyuOJ18Xh
+YnD3BvHu8qmxGXtuZM3JX4Lnc2UP+QlytfwHvy8RGb4Qnv+zemT4vcvkrI7k
+h+WLxeP6lko/ntxIHWyZ9LsP6G8A1B20/i8uXi68fj7A8tGXtcLL67ojIx5m
+W90hxB+cOZeLvsvJL5d51CDUsfgG8v3qB1O7ZpflVdlu/oOcMtsltyq3u1z6
+jeUnjMvYkXruyjmT62YsGbZD/hT+w3x1nZ/nTK6as8dm4cUvfAZ3LPSpx43N
+eZDTk/8dubMrj7dSWjIrZo7VMiffwFz3ZY41IiPXK98tv632of7H9m0YXs7Z
+HKtkHnGeWNGdCnZNXpjtuzk8nN8oc7J9bJD8mhhns7zv+K7FevKDbDe78949
+jK7FUOPC8/HFPPx8uc8Nwvt9fGS+GZlJOcN++1XmJPPPzGOsHKpc7CbRF76t
+uAIOLxdefMGX5otfHV2TU3YvYfuMlav5YWT41eyFHPFLXbPL7nmIJTfPe713
+f69vOdmRfC2e7eD/yKuKncW28p7r5TxsnTOwR/ZKzLtnZMSmu2fsOlmPuEJO
+Yp+MHde1mFe+UuzsLoU70O5WiJndn3QX+tyMnT9926R/v4zlP+yf7yh29rcP
+5ORF2Xn2nn0Wq3r3zYNzsBjOycur/Y/8DYUcpbiV3dcvFnO3wz1p96LlWnfK
+Op0Hd2vkUf3tg355y8Myj+8ljyR/J1fnzqBcpJyhXLs6wTOZb8fMKQdIBu59
+JmPlwdzvk9+UW5NDw++bdzw+31H+TU5t0a7lyeTFxnQtJ4MfyXvJWy3WtXvm
+7oN6J7V3sTf/RN+E7KF93iP8pIyVUzoi698tZ3jPnHPvvk/2QYwsVj8v+7d3
+9vDMrPOQ6Mhe0R2/G3tBdEocvkfX+vbOnN9Lv7hbzDsx+gLz8VOiI2LR/YM5
+agnH5RzuF915MDJ4MaV4eIGMPSDn7aHw13TNrz88uPRI5NkFsaD4U5woPhOP
+icWeDC/++mBk+FFsOr+HrT88a1sxY90jFN/xbcjAxW3yLZwNssbAeXcI3R/z
+dyXu07lXB2PFNOKfe/PuR6RfPHhU9kEMJNczNWP1q/29lH5x0FEZe1z6zSme
+uj97+F7eOmuAD8dnTeKpb4W3Nr8fG/6NnFU6CKuPy1gyeLgN8/nrfPU3w/Pr
+5YH403zpd8LTa2flpJwrmHlqzo97hfjnw/OP+cZdeP1+PznyXwpPhi1Ws2HT
++Yb8Vz4PH5Pvy4+dLjzfk8/Ip+Rf8b2NZcf5qnxZvuus4fmnM2TOG6P75+ds
+v/f3F+H5aHw1fh9f7MzMPzo87FIrV9NXB9eqefCd3IXhI/IP+Wh4tpgfB/f4
+crNnzdbD7zLWfM7aedF3enFuzrk8pxoVbJ43a+ND8pHI8Pm3zdiRvzvzXmel
+f1LmhHvine3z7t4XNphH/MD3goHqPWoiajL+fsTdbX8/5Z7xwcG6S8LzE/mL
+ZK/qmszcwVtj9057cfjTMxZOyrWKFcWJfDE+md/Fd5el311Ff/PCd70kMp4r
+vjRW3tHZcYZOyv+NFT+qj7MRYlt/l3ph1iAWNC+89c7uePE/1YauyH76W5ur
+81z+M16dFvlt966t66rIXJE9NHbktwnZn2vyXM+8Ls/1vtfmXSaH55/+KnLm
+vDBjnRHzXT+8XwO/PvOwHeYcGXdD9uv/AdSP6Zo=
+             "]]]}, {}, {}, {}, {}},
+         VertexColors->{
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1]}], {}},
+       AspectRatio->1,
+       AxesLabel->{None, None},
+       AxesOrigin->{0., 0.},
+       DisplayFunction->Identity,
+       FrameLabel->{{None, None}, {None, None}},
+       FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+       GridLines->{None, None},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       ImagePadding->{{2.842170943040401*^-14, 1.}, {1., 
+        2.842170943040401*^-14}},
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic, "GridLinesInFront" -> True},
+       PlotRange->{All, All},
+       PlotRangeClipping->True,
+       PlotRangePadding->{{
+          Scaled[0.02], 
+          Scaled[0.02]}, {
+          Scaled[0.02], 
+          Scaled[0.02]}},
+       Ticks->{Automatic, Automatic}], {192., -192.}, 
+      ImageScaled[{0.5, 0.5}], {360., 360.}], InsetBox[
+      GraphicsBox[{GraphicsComplexBox[CompressedData["
+1:eJx12s+KZUkRBvA7zuB7uPAx5CxcCYIy/htaEBRkVuJT+BquVHTGfxQIvbhw
+7saNG0UQxI3S2DM9hXc8t7puUVVW1Ujfc35xiK+6a3P5KjIjv4yMiIzMPF/4
+wY/f/eHnNpvN+29vNq9+l7/d/HM9fvjBq7/bEf72t179HQu/dfqdCr93kj8v
+/N0T/lvh+ffpFv7aLB/gd+f+Q28/Bd7sZl4XxQ/GD8YPxg/GD8YPxg/Gr7ef
+Am92vz7h8+IH4wfjB+MH4wfjB+MH49fbT4E3u3mt/1X8YPxg/GD8YPxg/GD8
+YPx6+ynwZve9U7s/Fj8YPxg/GD8YPxg/GD8Yv95+CrzZfXXGA34wfjB+MH4w
+fjB+MH4wfr39FHiz+99nr/7+Wfxg/GD8YPxg/GD8YPxg/Hr7KfBm98vZH4sf
+jB+MH4wfjB+MH4wfjF9vPwXe7H41x3Pxg/GD8YPxg/GD8YPxg/Hr7afAlZ+H
+yM9D5Och8vMQ+XmI/Fz84MjPQ+Tn4tfxuk/8JvLe2yf5mmduwy/n33txF/vG
+VPpg+uDv97hd7F7rXPq/0+1QmH6Yfph++CtL3MHmAxsfnvPwxfhksbvxYOPB
+xoONB9MP0//1Zd3oh+mH6Yfph80HNh7Mnt/oflGYfph+mH6Yfpj++1O7/5Z+
+2Pxg48HGg+lPfd88tTuWPpi9YHxh/HrdcTumP2d90OuAizHx6/39Ovx9xfSb
+P33mn1h/84HZp+eRKbD8M0U9OEU9ONV8+H/PP+v8st7J+Cbv/Nd4Tznc5zcV
+zvoo88OTxmOzw9/8cj6ZP7I+6vnm6RaWT7t8GjI/JR8YHxgf2PiZX2Y1Z9tu
+z7Mt+2iPH9ztebbFN/MRec/nZ1X3w93fz7bd31e5+oYc7vmefvvX2Za812f3
+le/w6Xiz6/nt+Kh91k/k+Mpf+MLWQ3v7a+bfrKcyH2d9lfx7/jzW+PjC+MqH
+/CP59vz+dJv5PeutzPdZb3V9m53x8cn8S45Pz99PtzD7ZP6njz2zfdZbuV9k
+vofx7/Jjydkb7v5+PUR+L3vm/MnNl7z7/1qvkUe+r/nnftb1TyXv8Xw99Hi+
+jv1qxbkfkePf6+jSX/3zvLvwqvyc59fMb85r5g+bL2z8PG/O451t+352tu37
+09lW+4x/8Wl9YXLxAOd5IP2XHN9+Hqn1qPhIf/RLnvU4e1ov2Pgw+/Xz+nXZ
+23zzfP0kxmU//eVnfGDjw8aH2SPP11nvsr/5ZX6Vj35/0vePhd/lYocXC+/9
+SD6v27PxR6f//6HwvK7PhndO/f6y+NPV+OW5XemHyX8x/39Zr0Nh7WH6YeM/
+nObz8XB5+v3zkHj2h0P1h433wcyjxsPrvWXe5v/bZZ7w55d5wnO/h7KH/uyY
+v+Ta00dufjC59l9a7EgO53rkeNbHfH63zNv8YXLtjU/OvjC7a//W4kdXSzv2
+hvGCjQfjk3Lrjw85TI4fOX7w7Af7wtad3eiDrUfK6WV/+Gfht9q/u4yrPYwv
+TA9/pW/+/8vSC5PzZ/Y3L1h840OOT/f/5+Xf3V/P435jH/X/6o8ZL/r3fLv6
+p/q/3/+u8UFOPzyPc1P+Si7fsBd/Za932ro8L6x9z9834/uLH7ATTG488yG3
+3/V4uBnT/1LOn+0XmS/le+uLN8yP8CFn38y39LF36s/9Iv0762Xj93g6r/2I
+3H6XWDyYL3/v8bZi/t/rvUPtn9rTp17QH+YfKV/WoeJVvSL/W0f6/bIXHPpG
++ej1/feFxUvfj9b/iy/5Sv++X6/vIeILP3r6+8aLeN+A72o/8H9Y/oDpy/1G
+vMHihX3JzVN8weof9sz4zPt88WV9YePl/sG//WrPv67e0K7f5z8L//047u/X
+/YW/9/v7Z8Fnve/P/SP3h36f/1D1jvFg4+lPHzn/hJ0Pep19qP2FffK+O98X
+N4se4/HXft8+hR33dX7hz3C+58nf/IE/ycf5Ppb3z1nPz+3Otvjyx873bIsv
++TKPkrNnr4dvx7z/td7sB5tvvifJR/rn+03e/+b7Td4vk7NHtpcfxT//oD9/
++3v0fnx9vXGsfEKOT/pP3j/zF/mp59H7yn+ZZ/Ej7+efQ/mD8Xv9f4h8eyh/
+1F7ck4vHPs/buC+9Cx7HkuPf8/F1nV/ZR3v+qr38J//jR84/+75yEe/jl4/O
+B1l/yfcwuXhTX7CffKp9r3fux/6++1B5Ac76G7Ye+vu/X/3lU/bs77M3JeeP
++V4rfthD/WEc/dkXtv7iyfrKx87z4s/+T27/hGf+vhdZ/fxNftPj66rqi82y
+zjB/7vdzl/G+eSh/IOd/9Kvv6CPHp8vX8wveMP/t85mC/xT11z7ug/bxfrSP
+96N93Aet8UMOk/f33X3cH72o+qvH/8PYzzOHMeszcn6f8Qvzr8R5XhKf7Nzx
+Q2F8Eotn+TzrwS5/Xpj9s/6z//KffN+ZzXa2tb72T/6j/mOPPO9pTw7zp36e
+OxQ2H1j77K8elS/J5bdeDzzd9nr2pta1559ndX6TD2H5Es78pz3/heVX+vt7
+xbOyT96/ydfksPHkV/7Wz6++f1nztXqn57uPa1/v+fkq6qPDo/qanD1g8833
+m6y38/5Qe/ODza/f0+zjnnH/6H7VftDvqw/lH3A/j65y+ws5jJ/54JFYe7yz
+f9432W/6+/+h/P2DeV3ivuFl2Z+8++cqX/y89lPtxTfc73tfhr2OtX7a9/vf
+9T2IfNkXHt2XZT3H72D7WT+/X8Z917HyrTju+vexf63vPXlet391/Yfa3+Qj
++698CpObPzlMji+5egnmL9ketp49v91VvlLfwObPP+H0r3wfSv/MeNC+v38e
+4n7pZeUf/ic++YP9J/Eb+kd9tZ5vyHv9lPXV9djfH/L72quoB87jvHSIeibv
+l6bwr0PVW/T1euI8vletumrI80re5zgv0w/zn/y+Qn/+BBuv1xv3cV6/i/vY
+29ifp8LiCWaPvt/fx/eod3E/exv4Ycz9Deaveb9kf2Tv/D40z4l5/+m80d8j
+8nvOdT/M9y7xIT/ob/2Mx59yf8z7pvx+s5+fNjvxIx7y+wDxFOeRoee/9b4V
+jvw69LrpsvxJPmWfrIfze++8b+Rv+PTz6135ddZNxnt9fXBe/mV9xDncz+GH
++P5hrQf6/d5V3Gvc1H7V89Fl1cO930PcN988wuzHPr0+34e/3tT69vuG8+qf
+34PRP/vNp4sd/l3nJflgbjct+eevNT4+s50/Gsjhef3+XvPp33/vH32fJJ7x
+6/E+Dfl+kve7MLl60Pzw+snp/z9f1nMavjjjAV78vOLBuomvvn+u8UU+11ef
+jic6nx0Lz/ovh9iP4v3wIuqR67jvOo74frjo7Xi9j+vfB9w+eo/O71N6vr4b
+8760n7+mR+exzG/s0+9njkO/fz7E+f8wvjjJx5oPfn3/+qT8C9/51/ced+Vf
++KhfxLt4UQ/3/PifWi/z6/FwMeZ7fH8HOC/c8+llfF96Wfmw77/H8if+1/3x
+Id4v7x+938sP9h9YPLNff4++iPuji/Gnp98/LXzX74vZG5/c3/M83++zP1nW
+8eVgvenv+9eh8oX+1kd/43d/fSh/+D9Iwl9U
+         "], {
+          {GrayLevel[0.8], EdgeForm[None], 
+           GraphicsGroupBox[PolygonBox[CompressedData["
+1:eJxN3Hn4blP5BvD97pdknufxIPM8Zc4ss0POMc9DiqQQjswykzFKZSoZUohS
+xKFUIiUiRMZ+GSJJQvyez1n3e/HHutb9XfvZa6937fXMz/6O2fOgbT7Xd123
+10e6blj9BdXOr2ZspRq4vMAUg65bt9r81far8WlrfL7C+xRetq4/VPiiwh8v
+/G7hbxW+uvrLq7+s2nuF/1dt/8KbFc0NhW8p/KfqP139lNXeLvzfavt27eFX
+VveZat+tse9Uf3G1qwpfXf0B1a4pmsmrTWVttZ5Hq7+2xn9Y7XPVZqk2TV2f
+utrnC09V/ZTVDiq8VvV9tasKz1H3Xlv33lR44+p/VP3B1TYt/OPqv1ht+qKd
+rtohhbes8Z9Uf2i1p2rs/urvq7ZDzTNLtW1rbKtqM1W7tcZ/VPTTVLuh8M3V
+31794ejr+tj6++eFj6/+mGp3Fd6o5niirs1Yfz9d7cga+1i1TxVepNqEwmPr
++pOFf1r4seqvr37man+u8V9Uf1S1c2p8x2qPFN6lxp8tfKf3XHinar8pfGuN
+zVztjsLPV3939ctbc13/W/39y8JnVD++2kOF9/S7Cv/aXtU6n6m/Z6m/T632
+YI39vtqJhRet9itrGrY9t//b19jS1Y4uvEmNbVj4xsJfLnxUtacKT6h+jxp/
+0r4XvrvwY4V3r/6J6k9wZqqt6xz5LTX+bPVfsYdFf1f9/XzhJQr/u/qvVlu0
+1nB+jT9T+O/Vn1j92tV+WXi5aqe4v+hP8psLv1pjp1tjtRdr7GPV/lr4nzV+
+Rp57uv2rv18ufHbhs6q9WvhKZ7zanNVeqXZajX2y2mJ1/Z9oqy1e+F/Vb1Pt
+0qL5RrU3Pa/W+Ubhcwp/ovDSRTdv/X1VeMH5H9Tfr1e/Y7VLavwb1d4p/C3n
+EI8V/lr4d+pq0w0bP+PTFfrGX/j3O+YMXx80aLyMf6cfNl7GgwdU/37151Wb
+s2jnqHZs4VX6Jge+WXjX6h+t/rhq64VPP1ttxprniq7x+0zDxvt4ee26d/1B
+47sNwssH5gzj2XkjEy7LeV657v1d3XNYjW3QNx531t+N3JjJ/hbNP+vaS4XX
+DL9/t/CFeb59mCH8i2fx9xeqLeS81TybRRYdVf0W4fkt+sbjh1lTzb9Vjd9W
++Gdd4+PFndvwNR6cJfz4Je81PH5Etdn7xsN4dve+8Rie2rtvPIKP5qv5H6m/
+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
+w4f6Y+E+1741aOsxzzyhYSfr3wi9fbDGbe3bsP1mMY3lCr/VN/vEXOZkb/y+
++ner/2/XfCP7s0u1i/rmG7Fhlh82P+ft0POr9qj2zfxGftMVg+Zz+b2XhGZ8
+13wv8+9e7e6+2V2exZ4Sh2FT/WHQ7CLzfLdv8Up2wSQdNmi2Df+MnbRndZf2
+bV/EYMQ82TOT1fgKwxZDYdOwScRUZuza730/e/vLvsUx0ayYmCo75rzQ2BPx
+PfY82ct+Mc8UXYtJGKezVh02PSruIK5I1i1Q41f3zc8SC12lrj/QN73/UHQY
++of7Fu+ja8Qlpst5frZvso+vu9qwxS/QbJj55y+aP/UthugeMQf6g+4Qs6AT
+RjFDmK5Zc9hkOn9+rWHTEWIZdJw4Bdn7ZN90g3G6Z/rMQz6joV9+3DcZbW18
+FXKSTBYvhMkZsYrZgtmZYlni2D/tm/8/R+QmGry89rDFH8iXV/sWf0Pzs77Z
+4fz6N/oWT5srPIBPnJl/hVfR3N63OAGal/oWKzTn9/oWs2Pz8TXd6wz8tm9x
+ZuP8cjG0GXI+xQnGdc2utn725OdDwwZmL/EN2TPsqjE5DxNzr3Muloxm4a7F
+tMYE39m3OAXe/Uvf9LT3Iia2UM7b1HnffGTxYfp66a7FuOj0JboW14WX7Fo8
+DM1SXfM7F8l5EMOhQ1fqYkdkfvaAeBc9yLZZNPOcGnrjYtWL52yIM/Hv1uta
+3IzdskbX4o1sntW7FgdbMlh8GM2aXfNfl867FvddJvMcnXvpaL4wGvbDTqFB
+L862eMb5gOJKG3ctzmw99A5/Udxpw669H+9SbISfsnzeqfwC254fwIaH2bpy
+H2zX0ftcMe+IDco2/WLe7Up5v/IC7LqJ4Y+VwyPi4ktmT+zfKtnDmcNjbMjF
+g+0nG4TdwrZhh6waPhLbX+1DvLVa+EjugI3B918m2B6KydPRx3dNd6+RfZg8
+e7JV1/IYztWiXdPV7IpRfJ6ePblrcW86gk6kjz4RHhE/x4NndY0H4e27ph/Q
+79o1v3Dd7Dkfi6/Etmfv8xMOzntZN7xzdvQp3SpmtV7eC/9r/bwXvhWfiN+0
+brD41Q/DF2Qgv2yjPIu/snHuPSLjnsv3Mqc4mHjUxhm/KWtbsGv+1yZ51oRg
+750/whfjf/EdtgkP8sE2z/jhoUHPD9os50fsGs0hOUtb5PyIWfETxdzwK74V
+d6JPtgj9g6GZN2dvs8zPdvLu2EuDxMDxuxiy97hl1+JU1ilmxa8Zm/UsEHxE
+5tw242LRMBnGZ9ku55lftHXoyYxJua6sE56QOdGQgeJg7pXn4i+My/l3zsfl
+PDv/O4SXxcHGZxzfb59xPgQ8khk7fOjM7xTMxt4xfLR48DGhR7Nu12z/nUMj
+Tg4f2zVbfZfwDj+C/CKvyCH4uK7JLTY2Xl429O4VSzd+Qmh2D2ZL8yPwr1gZ
+LCbGXkezZubZM8+9IPgr4UeybP3Q7JVxtjSbefOuxdP2zji/YJ+cgYuD8S9f
+gJ28Qddi8rB4Gtt7v8zD9oXFu9jdn8484uswHqfr2E70nZjY/hlnc9KdZMLc
+wWw3diybjUwQP4dHNtQBoRfvOiDjbEU2HPuNHXdgxtlubIVh1gCLR02e9cB0
+/f4552y1SbGnrslgcvmu8Do5Im7zvUHstq7l12B58BVCM2dkFTlChpAZZMTB
+wca/F3py6rOhPyTjG4ceZu+J15AJ6wXLfZMl5Mt1weQFXt402PgGoZkrMumI
+rIEuIlNG9gN8S/CEzLNR6G/K/BNCQ5aQQYdEVsHkEHuVDcF+YDvA4gl8Ovp4
+tfACfGfX4hb0B91Bh8ATIxPYnWyM6YMn5l2QI2SIPNpxeS/H5B2hYTuyb3+f
+NZyQ9cwYLEbBHmHfLBmaEzPOjmXTsGfo2ZMyTpayXcnDmYJ/E9lD1pAz44Pv
+zb2nZJ75c5bELR8K3SqRXewhcozdy2eXp6aT6ekR7RmZXyzitMEH8YrTg+lx
+vjb5wDdn68pls01hsQX8TS7g8fNCb/y0zCNWwF7mz6/TtTwdzI4mn8g1MQey
+kK1AHq4e/Ehk4bnB5vYMvv9ZwQ+H3jxkFP/9/OBlgp/umtyyzme6povIIzJk
+n2DyjGwgL17N7yK/ngsmjzaPHPpaxukusuzkzAOTT2/FF/hU12x7/uT4yC2y
+iVzaP/iFrOei7OEu+b3Hds2XMA/bhnwip/4XTDaRP/x0fus/umabWP8OkWFo
++ObmuDTzWIv8Iv9Wc+8eXbOJ0LyZscsyp/6S4AOzhvNCc0XudSZPzZlhR/FP
+xavZXOwwPs4v+hbbHUQ2ohGrly8Qk2fr3hvfearIGTFlcmnl0LCFyELyURxe
+PsCc/Gy2FRtLvJfvbZ7LuuYriaeTk/wlfpOYuTi/OLn85trB5iePrg09+cnm
+JieviV/MlrOu67O267PO6yJX0c+Zfbgmv3Gx4v2PDFteSJxZbJ3MvD5+9B2R
+dTdlTtfR3RLZeGPo+eB89QW65mfBo1ogcWG2D1uJ/SQmbMw1ds7NoTs8e+tZ
+5Oo1eR4/YuvMs1DO55U5q2Qm34ztxPcXG+dT8xFuDebXo1kucoyf/uvIGbFX
+cmmH3Ms2uy00xn8WGvJt26x/4chS/sivIpf4G+SJeDT5TraLUYpVHhcsvnp8
+5Al7ayRDYDaVWCV69oYcn7gl/hWf5AuxneTaxPrYG+J4d4Wen2T+1YPvzrP0
+7hdv5LuIQ/JlxCJh9gzbir1FdqlTErsku8gnMotceinj4pm7Zc41IrvQkGli
+d9ZGdlmX9Ykx7hu8QeQS25psEWMSaxJ7EKcSi9g+7xcNm8R85hUPvCPxipE8
+4VORIXx+vr9Y3dt9i6PtETmDhsx5M/GBnSLr7ss6z8xvp0cuyb1iaPJockLy
+Qe/2bZ17d60G6cGs4Z1gdpd8n5oisuWtYHEzdQhqfWaObPxDfqPr7mGDiZs9
+nHvvDw1ZKo+phkP9xmVdm0cuT92XPKk4pLqCxzK/nBXMx5HLejTr18uLsZ1c
+R+e6+oMnQq+OD5bDknN5NmdJDu7x0MiXmWeertUOyb075wzMP+dvNQJqhMZ0
+rZdfYQstHMz26Ietxk7uR35f7RA/Tk4NFq9D+2To1fU8E15+KhiNeJp1Lpfe
+uu/smq31XNYvr61WZpvwxQs5t/rng+V8YPaV/JGaQP6F3t9ySXL16nvYKnLk
+8ubqfJYKDXr5/b9n/Pk86+68i0fyjtQKuVe8xV4+mv2Uc38l96r5kR8XZ5hi
+2Orq/O254tdi0f8K9rvk5l8LVqP3Uu6Vu38150SuAWYjzRca/DVL3oN9Hp/z
+JndizDW1HPLt6nB2IyuKZvdhq+NTUyTmLKY3zbDV6flbXv6NnFu1eeps5M2N
+mUvt33/7hs2pzlZtED9FQBr9tOERvKTWR23de5lH/d474Rd1O+r9Ju9a/3aw
+ulc0dKi897vhhc9kLvPsm3vQzBCaj3YtD45GTc49fVsDXrZn4qL2TS2A9aBV
+c/t+6K/Mb7B+vwP2TPWBan3QqNeF5dblxK3VGqwX5hOpP5T3Z3tMHizerp8s
+43LkML2vPurt7BWayTNObsj3zxx+h2dJP0XGyQTYdb9DbnrWrtWvwuKlmhrX
+BbpWozRlfot+qmD3ThV6tZH+Ns/ew1aXpibDvWoXx6SfJvugblEuHi+oP5ou
+WG3ttHmueuBpc+/6oeeL8aHEeQ+NPJPjJq/UC8kBTMj8aMRbDsnfsBw2ejVO
+f+ybHCQD1VjOnGdtG7xgZBq+wC9y8WQTubRgZBk5Rj4ZPzLrmSnzPx2aCcHW
+Ro4d27U6Q/GK44JXSz9nMJkhVktuqGmUz12razEZNKM55so8aozQrJ1+ntCb
+hww6MeeZLGADHB4a43/vG41nHZQ5rUuNx9R5X/KJ84UXBnmP3q1YsnWSVewN
+sowsejlY3ZE4jvqiT0Z2weSSGkk5XTaGOmX1Shvl+kKhJyNh930hNOwZtT7u
+JbvkZNVA8nHULH0sc8qJkaVbd01OkV9nZm2LZp1q5+CzM75YMPlK76pHInvV
+0skPqlmCyV65QTTkrZyl3CUZqMYZHpexpTI+qW7yQ+OwWiZ+g7oi4uONyFPj
+5OGknFzXeF0tEVlHPuH/fTMOqy+aLPRsDHJO7dCoZhIWW9avmHF+Bqy+SIx/
+pQ/RrJRxNHwe/shVwcb5+2TWDJE/MN+fTFWbRK6qWYLFi3Ycttps9Ug7F95p
+2L5vYPOr/+FT8KdWD737YL6V3NMaOYdTB383eM3w7MzBxslUuQpyld8Ei2WJ
+a62d33JdsPGrs4YD0q+T9VjDavkt4kvG0aqNJCPoSr4S2XRIaMTZ+V90vRgW
+G+ywYDFvMmz9YDKJ7CPH2AXqjshA9UgwO0I90oYZZ5dtlHHXYXVKrm+cechv
+9UbkMD+UTD8o4zCfVFx849zrO5FNs298L7kc/teKwbdEZm6e+e0z+gW7JoeN
+swnVCG0RzC6EyUDfjGwZTOHDi3VNRm6VcbVJsO9KyHu53QW6lt+F2ZPk8Ni8
+azRjM873VB8jlzGphqlvfug2eUfWyc/j7/FDZ0lNk3fXB4t38Um3C/28qYPi
+n/JjxwWLj8FLZ2x8sFwBfHueRU/QEXTC9nnu2KyBv3l9zgl9raZikcgE9HIJ
+9Ii4m9p48Xz1UfLUd3bN7oXZwGqsdsoa9DuH3v7vmneBXk5x5CfCbFR+rjon
+fvGGw1ar7x65APOMvp2Rp2QzLxXMNuYL75F75bv3zB6yIffMuL2Sc/U7PGfv
+jLsXXjn05qFbje2TcfFG+N6M7xusRkXNzKjWCR7VJtFban7Y42z3k3L906ER
+i4XN4fpnQsMXhvny8iZqmMQB1PLQT/SIGKV8/Dpdix/CcitqkMy1dvZ/r7wL
+3xocEBq5RPlF/rj1qfWhr/nj6o6O71oMwPrpXN8FoDk5tAcH03v0n1yJmij3
+8q/53Qfnt6s1QkM/0o3WL7Z5d9bgWa4fknnEN3bM+TS/+qiNsq5DMz9fHrZe
+9oIaKXYFe4ENwX6gr9VK0elikmIWZ4YejXqqCaEZ5XQOyxp+E3oxTNePzDze
+y4TQexdHZf/FgeGHM/blYPeiH9ViGXef+O7RweKix3xob+Fn856Pzl6J5R6Z
+edSbsKvZ4eIYbCD2zzSpbxqf/ZErej7v4vjMv1awcd9hibexhaZI7I1Nwub5
+SsZ976P+iR3xSt+ueRdquU8KDfvLs04JPi7zi+mZx3deYjWH5Lypwzot6yRj
+yBr5K995nZp3pE4bzVl5F6dnXMxETmtUl+VeMkp91+kZd98ZuZc9c3JofOvj
+m5978h7FysRb2J/8VTlrdSlqt8RG2F/sMLFu188OjZjP2Rk/L/TGxVXkzF4L
+zXkZZzupreJjoj0384ulm//sjJ/Xf1CHpk5LjZa6GvVebDnftsBi1Oq+1G7J
+0fNr1HyxM41dlPHNhu37F9fk9M/Pvfxd9evnhB5WA6b2yzrZeOLe38g7YqPC
+4lHqpK7M2RPrlvP7X2gvCY3YFWwOcSSxKnGqB4PRi2Op8RLL4quq7b44NN8O
+/TeD38u4Z+3ZtfVemPWrB3MvP5f9xSYTwx4bu47N5rtatWLsQDbhFVm/698J
+DRsP9vvcf1XWIxd5ee4VL1e7NlXWjGb27Mmk73a7Vgd3V/bhqqwHDRvb+O5d
+q/uiI8nk9Yftm7trw9Ni6PQvXQyrMSPD0dN9dLo6ADVjxq7PuJphNWH04E9C
+Q6ezb6/N7xWHvj73ikPzS/mA6ivp8ju7psNhtWdqmdU0H5X+xmB1Z2JV4lTq
+Aowb40f+IPc+HxrrEb+yNrVq6tPUItNl9BpMF/u+Ve2Z2mA5kZ+Hf9WPiRmR
+vfxHNPSa/sfB4klo/hp8a/gFr+AfOSL8hbflWeYIDfpbQ4NePs6ccpj2X953
+7qznZ+FZ30henfdCzljnXMG3h1/kgm7POHxHzvP9wcbx2sScB7Gc2/oPvnFT
+QyY+7LvUieHHc0LzSvb/huwn3lTTRr7RfXxmeo0vJmbE/+LHyS2psxTfFecd
+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
+l/8HWnUADA==
+             "]]]}, {}, {}, {}, {}},
+         VertexColors->{
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1]}], {}},
+       AspectRatio->1,
+       AxesLabel->{None, None},
+       AxesOrigin->{0., 0.},
+       DisplayFunction->Identity,
+       FrameLabel->{{None, None}, {None, None}},
+       FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+       GridLines->{None, None},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       ImagePadding->{{2.842170943040401*^-14, 1.}, {1., 
+        2.842170943040401*^-14}},
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic, "GridLinesInFront" -> True},
+       PlotRange->{All, All},
+       PlotRangeClipping->True,
+       PlotRangePadding->{{
+          Scaled[0.02], 
+          Scaled[0.02]}, {
+          Scaled[0.02], 
+          Scaled[0.02]}},
+       Ticks->{Automatic, Automatic}], {576., -192.}, 
+      ImageScaled[{0.5, 0.5}], {360., 360.}]}, {InsetBox[
+      GraphicsBox[{GraphicsComplexBox[CompressedData["
+1:eJyF28uKZFkVBuDQbnwPBz6GnIEjQVDaSzcKQgviSHwKB76Hil3dXkgQchAQ
+OXGsCCIIYltqV5sQeCIrM4hIs7Kl4pxvHdYf2ViT4M+1L//ee9322qc+/70f
+vfX9z65Wq5+8sVq9/p3/XU0/h837z17/u9/A3/rm6393hT9z+h0Lv3OS/6vw
+d074T4Wn38s1/NVJPsBvTf2H3n4MvLqaeN0UPxg/GD8YPxg/GD8YPxi/3n4M
+vLr64ISvix+MH4wfjB+MH4wfjB+MX28/Bl5dTWf9YfGD8YPxg/GD8YPxg/GD
+8evtx8Crq++e2v2u+MH4wfjB+MH4wfjB+MH49fZj4NXVVyY84AfjB+MH4wfj
+B+MH4wfj19uPgVdX//3k9b+/FT8YPxg/GD8YPxg/GD8Yv95+DLy6+sWkj8UP
+xg/GD8YPxg/GD8YPxq+3HwOvrt6b7Ln4wfjB+MH4wfjB+MH4wfj19mPg8s9D
++Och/PMQ/nkI/zyEfy5+cPjnIfxz8ev4EH5u8cu/DD/4xqn94nfene0M/nLY
+1X3o8XuhN8abedV4sPHg+66n87yvNm/P+4Q/jD9sPFj/b/d9LWw82HgwPrDx
+vjafg/6w/rD+sP5fn89Nf1h/2Hpg48H289Xp7/+p9rD2sPV/Yzqfmh82P+z8
+YPPB5oPNB9MH2Pp7XnBfmNz5s6/Mc57+Hes8/d16YPaW+q8/+0v9zXwk7cH4
+sPZdnw9lH8H7zH7w6f5k2Y+n1ztG/jdG/jfWejOfIbfet1s//mexX/LujxZ7
+zvyn8x8LW2+f77BJ+818JNtnfpT+gtz6uj+4XGtvfWn/6V9SnvmT9tanvfPs
+/uSusPNKfzSNe7HGl9z+J5/efjzzX+Rwz1cOMd/hzN+Rd327WJMbr/v7i3W3
+l4t11/eLtf1Jf5n5UvIhd77kcPpLcnxgcu3tLzm+6d8zv8r2xrOe7o9XV+T2
+u7e/K0w/Ml4Yz3ph68n8K+NL5mMZbzI/I7e+jC+w9fL/1kvu/GD6lPLM58j5
+r1x/5nfk1p/xMvO75D+vq/j39VQcCvtY8ruMr+T49/Eu1xlftY94Unwz3pIH
+/7L/Hs8OhfF7v+379ZD3+Xne8qf8PX2D9c/7N/+oP/+pf95X0/+SGx/G3/3Q
+fvX74uHsfjf9Xqx7vLpY45f3rfQXed9K++/+61XZI76w+WD9836W+pn3obR/
+5/dB+13yfvtLXzP+5v7BxoPxzfqA/XQe9l972PnmfTjzZfvxbpv3ZtaDj+f5
+bje/Of39L4UnPrv5d1ty+PY07+8HeOr3MK/z+byP+8I/PLX77Zn8zVO/P8x2
+vR3giffz4UtTv8F8P594DOQwvo+ndi8G48Hk0993Az6w8eGp/bH241czb/hz
+M0/4izPPbG9e7WHzw/rDfX9Tvp3zt9uNc9QOJrff78z9yPPX+Ik/aOs4bn49
+64HxnddP53OAyffzOpwXjI/zuY12xkusvf10Xvi+NZ+78WBy7Y1H7rym8V8O
+9B02H2w8eNLnx7CbY+F+vzg/N/vhfPHhj3p9YNE38qf1fFt46ud+uKv833zm
+5+/4WzzxSUw/uv6Ppd/aOw/yXh/ZFt++L8dN6l+/PxxKPmH15cXf8M/4wc5f
+e/zoN/9EX+nzD+Zx7SNs/xPzX12/XpT+8F/+bj77AZOzB/pGf2H67TzJ6XPq
+e9pD5rvad3tc8lu86Ffy6fF3V/PD5PiIT/Q97U175wWT9/h+PMvPzNvfNxb/
+2POHx9KDaXkPZX9wH29/5of9veObiKe7sOd92UNi83f5TfiPXdRvdlGvyfiz
+jfh8Xby7vx83PW/wXgKPQ8Yf/Y0PWy9sPzM+sCd6n/pP/4xPv3q9fOmX+YG/
+m5890GfY+o1vnWlPsHiR9mc8OOvp2uOX9vRsOpdaL/twHrD+2ve64V3o9W3d
+H8i7v76t+lTWs/N+RH/Is37G/1o/++v1saX+ke9F5NbHv9L3rC/ne1KvHzxs
+uv86nL3PaN/zgRe13+T9PJbxnC8+MH+U9xH3U+fj/Ohfrw/vSt7rR8t7h/b0
+XHvj+2WvHY+brje7yOtvPiU/OUT+so/3jEPFX/Ju1/vax8T0UX+8Ot5G/rLU
+Q3t98bHyV/ac/q7XG7fV3v6S49/92eqKPhqv1+t25e/w7e+t25LTV/P0ePW8
+/BHc89MXpQ/ipXb8C3vN90P6Qz/4F5g+9Xz+ZfGBQz/K3xmfv9G+++uXlX+Y
+r9/vXtY6yd3H8/uBHqePFf96nnwI/d5Hvn4X97t8D1ziK33lL2By4/d4fBf3
+vcUfp73g2/1x5guHyFe2tf7VrJf9/rItTN7vNbvYr7HsA+77tY392kYeMcb9
+eoz31m3cn7dRrxjjPj6W3Dz9PJb25HDGI/PRP/2dh/79vrUt/yDe0c+n7zMf
+1373+sjjJvOjfj95jH08lNz5ZH4L9/rWUqfQX/xVn7J+cvqnf4/3C9be/pDD
+uT/8q/XC9itx9+f7wuwn6xPyBfu3b3bl/dB7z3Gjvf3t9cndpucf28L8I2y/
+zYef/JY+weT62y9y+9PrX8cz3Nf3WHLYOfZ66xKHtbee3n9/Fs/IrTf79/l2
+hdlrxi/82Sc5e4Z7feZFxQvzw86PfpL395vn/zcv6fFwwfLBHv9eVH4K83cZ
+z90P+nqX+q3+cNa7yNkvnL/mxdff8z3L3+G8n2T/rJ/2+8s+7v/HTd6vsn4h
+X+l+dhfvRbuSZz0h37/y/kVuv/N9LOvF5PQp6yfkPX4eSj9g9vFs2pfiD+Of
+cvlSr9/c1X5pjy/MnlKuf6+P3g093i3vafrPcTDuE4+V7/T6yXI/XPV9OKt/
+ksP53kbe84Ol7p/1ns5nX/mD83ga76K+eR35wXV877WN97jF7slh8v4e93H5
+88T9felYGD/xlf2Lr87PeP17k+eF9e/vj0udMuN31kczPibmv/Hlb2H+mD6S
+T/0v17D5s14K9/e/53Wf0g7Oek2+H6af1J4cdj6Je73zuEl/0N8L9uH/bs9w
+1n+6HT2UffT7/M0m/E3Y0z7sbfnei5x/fPr78n3cR24iP16+1+p1Ju8P26gv
+7KIedB35t/vGq8iX7z+lzrp83y0fND797feD5ftu+t/v1b4T+cecr/697mk9
+P79cZ77e7eHh7Ptq+Ry+8in86DfMXvgb47GfXi+4XOf7W37PTM97/nUd+dV1
+1FHz++OlftrrkQ9n36PQZ+vN/CW/L+n2tbp6Np1zvGsdIr96WeNp3+uZh+B9
+GOK+HPLbOm/62/PY5T3cedPLno/fndW18vvxzGfsB369Pn25tr5+v818Y4mn
++b1C3g96Pn+s/dQ+19vt3fvIGO8P23h/2Mb3Kcv7QcbL5Nvvq682WW/r7w/j
+2X033x/4hx4vl+8T+/viQ/kT9ud+bP/7/fVy3bHvUX2/97jJ+2j//xjHOg/7
+3O9T49n9Mv1Nfh+Y+pj3tbzvyO/FS9j5w/ync+v1vSVfp68Rf4Yfn/DPNqfu
+n9wNX5jwAPc4MkZ8G+N9bxvv1R+Wvub7b35/mvlQ3pd7fXQf3+PdRrz3PcxH
+FV+ML55M+vTX0h/n9fS74b7sUT6a9fXsR3/798xLfHM+/Xv05X7kvNyHYPtJ
+v9nzm43XfdQL7iM+kf+x1kNuPd0/7Ss/gJ2H/ev1Ef9/6M9Dz799N/ZRxXP9
+2TP51P6fs1/+d7Xv/unv1d7+/g8W2dKY
+         "], {
+          {GrayLevel[0.8], EdgeForm[None], 
+           GraphicsGroupBox[PolygonBox[CompressedData["
+1:eJxN3Hn8b1PVB/BzztcYmSozGSqKkCkydHElM/caMl7zTOab+SJTg+YBkask
+TTQQkVmZShkqDTKLpzTgoafkWe/f/nxf+mO/9ue3v+vsc84+Z6291met81t6
+rw9OOWzouu6y2bpuVP0nqp1bzdgLfdfdX23fwi9V/7/V9iu8XP34jcKfL/zF
+agdUq8O7d9b4itXOL7xy9Q+WzEGFX6n+19UOLvyd6r9c/SHV1q4Tfr3+nll4
+WuHLC7+u2lp17LurfbXG163+kBq7tPCkwt8qfFnhjQpvUfjywidUv1W1bxb+
+drXDq72h2pE19p3qL67285L/WbV5auywOtdy1V9Z49tW/wOy1bYrvHy1owpv
+WLK/K/z1wqdVf3y1Hxbeu459f/02f/29WfXX1tgS1XYtfFKNXV941sI3Vf+h
+apuU/Nb19w2F96z+6pK5sfBD1X5d7T3VRiUzVLu68Bn1+63V/6janCU/R7Xj
+yFZ/e/U/rrZv4Z9U/45q2xeerdp061/H3lH9CtXOLnx39XdVu9lv1d5d7dQ6
+z0L1288KH1rH/aHwzwsvXP1t1b+r2gdr/I/1971kSn7+aovW31Oq/3H1v6jx
+1xd+oPq10sy/UrW569i5qp1Q+NGSPTHn/VCNnVl/31f4uupvqf6aarsUXrza
+SYWXL5lN8l7NW/jxwicX3qHOdWb9/WjhE6t/V42fUnj+wo9VP6PaSYWfqvEH
+/V34T4V/U/gDdexuhZ8q/Nkav7Hwn7y3hW8r/GzhZ8hXW6b+PqDkLyj8lsJf
+qnZBtb+VzMwau6PwPwp/tfBnCj9PbwrfXPhF71n1e9GTwm+s8TdUO8O7V2Mv
+V/8/1Rap+Res8b9Y58J/qd/OLPzX6s/yDla7on5ftNorhfer8VerP6faD2rs
+F/V3V22JwotX+2j9uWT1/6ixjxVeddR0lp4uVeOjwh8vfG3hT0W3z62x31f/
+W+/T0PR6/8Lv75s+H+hZ1vimfdPlB6O7C1R7NbpMf9/XN3vBPqxZ8mtUu6Tw
+6tZvaHq9R13PbUPT6/WqX2dourxB9e8dmi4fV79tHV3epMb6oenyh6KPdPCu
+oek2XV6t5pw6NL1du/pD+2Yr7i18ct90fErfdJxeb1nj36v+iGobR6+/Ufj0
+6neIXu9Tc364b3r9gegonTqzxtevtnkdN4v1rHZMjf9uaO83HZg9Okjf6fE1
+0YXJhfca2ru+U/SaLu8WvabLe1Q/LfaBzbg6urSFc46anh80NN2my3tHZ2+L
+3FrRr58FO+9H+qbP9HeNmuMo6x+9pI+TPOOh2Qe24bSS2araEezI0HSU/u43
+NFvDpny4+kk15++i+7+qfkPHDs2W0d9zCp8dPX1kaHrtHbup+j92TZc/1jdb
+wvbt2jddpr+nRn/p7ALR31MLf676adHfz9G7oekv2/CId7ba+YU/Ve25ws/W
+71+KLh9Iv6LLl1T/2ejvpYX3iP5+ufq9o7+X1/jXh6a/NsWFYhvPiy7T3+8O
+TVfPLnxR4Y8PzT7QaXq8a7WFh6bX9Pne6v+va/p+ZY1/J3pNpz/i+Vfbva7z
+qhr/frW3VXuxjvlsjS8dvaa/n46e1VD3cvR7nmrP18Dnuqa/H6zxNaqdV/gd
+Nf7WvunyjYVXLzyHa6n2z77t2dfV+AOFZ692RF3D4dX+Vfjb7F7X9u4TC69V
+7VuF31Xy/y58YeG3lexvYhf+U/1FXbMJt5TMFfX3nH27WDL247cX3izXtiXb
+6nqr/SrYuTbv2zUfVvgO+l147mrvrjZXtUO939kr7JvL1zX8NvO/qW+6Zf96
+c2wje3hsjU+t9rXC7y35tQt/t/BRhY+075bc/dV+WW2B+m3b6nes/vsls279
+vn3ufRIdGdqxu1f/9r7ZgW2qf1vszHY1PqXaVY6tsXdUO7bwRnXsj/o2vnrh
+fUrmp4Xf2DebQY93dt5q1xWe6lm4Ju9J9dt4n6sdXG3nOuYez77w66PPK/TN
+Vq3Ytfsx5zLVji98nPvzPtScj/VNfsfCH+3b3nlM/X50zrVtjR8wtPm3L3xC
+jt2gZFft254739DmobOPFf5ItTfX36tEXzfyrtprqj1d+Izqd4/d+HzhWws/
+U/iThe8q/GThydWvVu10MtXv2bdjN67+Jban2hdKfp8ce0xd29HV3lRja1b/
+bN9077nq/9U1vFD99veu6eC36Gj99u/Ci9Dj6O+3C/+niy7X2L7VXig8veY8
+ttpi9fv+uTa6+j1zBh+Qa7P/LlOyfd/wfdXPEp19U97BD1T7YeHna3yotsLQ
+9NPe+rX6e9a+7cuX9W0/nTu6/ono+4E1Plu1TxZ+d51rtbwPf855dqq27NDm
+ssfz29kL/vz1NX5QdPytQ/Pj2Rb+O7sxa7WD+2Yf+F0vDs1GwP87NH+bzt7k
+3Y8NOaxvfprxW9n/wp/pmu3hP8zXNVsCiwvWL5n3DE0HL8u9uN+XhmZrrMMR
+fdvf+e2H9833YBdeHppvD68ytFiC/Vl1aLEEu8PeiCneWO0rfZuL/dmzrmFT
+etK3NZtZvy/YtfWYmXU+qm/re0nh24dmW79SeM3oNXx03/7mY/w76wC/Z9Tu
+iz/zvb7ZN/iYvvkk7ne79ItUW2fUbBmf5/t9s3fw9Ng3fs7vq583mP3jEy0W
+mwnPX+3OOufkodnGdarN1zd/RlzCVi1e7X1Ds9v8qP8M7UWC1xq12OyC2E9r
+Ln5ZL2slXrqHb5B1e7D6Xex/hbfIsxY3bR276NpmFH5PbOaWsZFv7lrcAy9V
+7ZS++WZk+lGLg+ANR81m8uV+GFsNX9M328s3mxLbuXS1U3PPxjcYNdvIt/vF
+0NZt7D/p+ULbxx6zh9aJb/aWapuK4+Kr3Te0fUQst3H8QHZ4pxr/QGzyA9Vf
+37c9gu3nl73d+z1qcRqZfflFWav1qq3YNx/PfsG/E6/ZW27ImhxX8h+qtkP9
+/r5RW2fxo72D/ymOY8tvyj3NOWrXcEvhG/q2f9zctX1APxFnjZqfuUrX9hP4
+bV27HvHjqlkrcy7btX3ztsiv37f91d9zZM9yHU9Uv2Tf/LfXjdre5f7nSjzo
+763ZTPZyaPveHbnfh/gA1RassS1Hza8lf1bf9i0+7TbZd/ijc4/avcEHZS9a
+o2txJbxmtd8WPjJzeoY/y7OeL3jtaocMbV35b+fkWfCHH6l+5eDjs8+KZ0+0
+343avJuN2vthnY/K3rhe13xj++F7Pfv6/eG+zb9d7p3fbH++L9c8b45dv2tx
+q2Mndc1PfyDPa546dpG+/X3y0ObkGz9d/VJ9i2dPLpmTRu3+3tu3vZbMKSW/
+WN98Zj4RP5xftF/J/bF+W8J+Uv0zfdtnHUtmcrU/5Fh+/MezJnz104fm09uv
+7f+P5n7NJ2Z8X7VHC3+ib/M/WXjD6peu9sm8Jw+XzEfjG/Axbq+xZTO+Ql3b
+WZn3DaMWjzuX9+aRrJXfn+zb33yTP2b9Lyy8Ud/87Y9l7g2qnR/5P2d8kazb
+uUOLK9z7l7PvP154wVGL2Y3zTZ7Kmuw0av6J+IL/YnyrrsUj/JEtuxbfP53x
+O/OMnij8Ne9v3/yHW/q2Pub5Qt/iF37Ln4fmq7jOp80/tHVbedT2cvHF/wxt
+rcQLjxf+dN/8q392bUx88dzQ/LG/Fl5o1LgG83+xb88Cp3FenoeYyJrxhf6a
+6/9Z32KcfYLdCz+JDP7h4qGtl1hpsVG7T/gruUdx0+Kj5r/BF/YttnLv9/SN
+s4D5deKqHbvm072YNdx51Hw71+D8+wTP7Fssxq9aYtQ4Dtj64E92rvaNocVU
+/8xaia227ZrP96+szzeHFoPx93YZNT9PzLX0qPl48K6jFsvx//h64rE9uubv
+wTtU263GVxk1v++XffP5cC/iNP7envXn1UOLN/h1Pxoaz8K/uWZoviD+RRzH
+J9y7a9yXfeithf82NP6T/N+Hxn/y024YGi/D1/pm3/hP+Oah8S98G/4Tv9HW
+fmXfuE7jy42aT4ZvuT3960vmlaFxmvyMnw6Ne+E/XNU3bhO+K3s+fwBP4jrt
+lXhN40sWnmXU+Ep77U+GxueYk7PJP8C97DVq3A2Zr/Yt5jJ+Sd84I/co3sK1
+2Jt+HvuxTdf4mAWyPmcEkzmb3ah2+qhxofbY5bvGvdgHxT43dw3bK/Et9jb7
+mv0MFhvul31j9a7xkTBbbd8Q74/3Dnjlru2JuJR1uraPLJx5fj80DoitmXfU
++Ef44aHZVhzHAqNm02F2lr3dsGv8JCxWwqngSTaOHV4853ok9ts4nhJme3Ep
+bOwmXeMsYRzIm0aNk2SPLu0bt8Ju3JF+8675Odacf/iZ2J6tY5/xJVNiS5fJ
+nPuPGq/CHi06atwl/MTQ4kfneueo2TUcy3PpN+0alyiWFwvg//jSC3WNb4cX
+7prPiKNbumtx9HKRmfAd+ub/iNFxgHyVafEt+BVbZH7+MF6OT8Yfm/DLIsOv
+dizfG6e3Qv8aN75C3hlc3Ip5prg1/o899IMZ5y/xX96Z90SugV+Nu8Bdr5Tn
+hVO1h67bNY5rlTzf3YLtL+JofNdmXfN/3pnr+UiONY/4msykrnHPq0ZeLCW+
+wtvggMWk7KpcjNgN/yNeWyNrLociZvlKdF/csWjXeC/Hsm+ew5p5FpMig2M5
+O/uL50jWMWJz/v5aeX/49fR6qa7ZiXWis56h5ypG4Oe/J89X/oU8DlYehI+L
+G+GT8k35ydZ7vaw5PaN7dHelYOtzWs4l3uHL8Gn4Qtb4vVlnOkSv+ETW0rrj
+LlYNnljP+C1/6JoewOwPe2s95+0a/2/vtG/i9u1ZuAh+y6ToJv5/ctbHWk3O
+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
+uT4yau4mOL7M/2r0V52tepeJmGVocvLOUzO+TNfynLNGxhgsp2o/U7NnrxGr
+q8fjV38o48uknz0yalrkgejxwcnzOkbdjvyvOdT1qLNbrWt1N+rt6OM8wXKX
+9rjZcw2HjNpcc+b3uSOjNu/1wepz5BHprLF5Mj5X8Fjv58u53hU8I7rmmreM
+fXA8W/FYbMQGOXb+yB+ca8An8E/wR3wVtTbq37zbevkm+6O9Qd2bnMsXMi72
+V0On9gXfJcf1hsir1SE/JfpIP88Klq+hj2p1Fs44PaeT9HHJzLlTdNO4up2l
+YxO2j/yiGVeTowZsr67p4eK5Hv0SwRN5pqHxCeyZdV4/+rtkzmUvY1/YFrV7
+aoKmZZ43Z/4fBjuPa1wy+M85dmwb5IHYgVmCjdtv7EP8XvXp6nrsR3xnNT3U
+hk6r3aHvbAM9p+N8YPwvHoNOLx/8UmTGdT5k+M8zu3Yu828S+QPyrPm1fFo+
+Ml9ZTY56fnVKeEKcIYxz0K8QjItYYXitTlhtCRuitod9mT0y5rRffyvnOi/2
+552Z/x3BE7VAo/abcfml9XJt/PmVMw+fmm+N91gj6/amrn1ToNYHF8SGsVNs
+lN9XG16r/8ENzcyxa0be2qyeZ/Gvof1mTjVXa0TmlcypBkncoA5JHIGrMc8l
+XasRYivZSd8vqBHi/+Nw1hpe42rWzjhehswimV+dE1uqvmidjIsd1o08G2x+
+3L5+rWB5uHWyVuZbN/rLd6ZrUzO+fubBYavrxUOqTZIT5M+ovYQPy/OalDnf
+HczH9vsGkRGzbJBx/s+GmWeuYL4QjnmjyP8gGF8kFzk58o6FvxEsB8l3mi/Y
+OO7InmG/sD/A3wy2r9gvumDjuJr3R149J4zPwbmpd7q4a7lNGO8066jV/Pi2
+4+70fL9zavzDo/a7mij14LgpNaVqno6ILm+Rd0wtOoyDMoc5+ZLyJvYq+5Q6
+IDVSS3WtvhQ+Ju/qNnn31DZtk/nhLXMsvkuMJ767OhjHJcZTT4UzV1tlL1ym
+a/Wu8FH5fbvI4ONhMRn+Ss2Qvczet32OVRNlHK91VY43rrZdjY086aHBfGD1
+ro61x9qTt8p9zT5q9VLWQs2Pfc5ehj/Do12X8++ca5gz2Ljva3bJmsv9wvK/
+4tZdM24MFsPam+X27Ol4M1iOyfc4u+d6+BvwO/IspgWLlaZlbfV7BFtz+Ias
++Z4ZXzdYrKx2aK+syXHB4l8+u/wiH3ilYHGDmih+A59hjWCxsDortffiX/nQ
+fXNt+v0yLqZWN4UbfCjjZNXxq6exl1nrnfLu3RN5a84XsP43d417VGuFn1QD
+fFDmlFvgE/AHzsycaoH4CMbN55kfkvuVM4d/nvFDg42LecQ7DwcbF+/Is8r3
+ycMfmftaMeMTvOWo3c+dWcND846pqzo893h8ZGDfKB2eNfRNw5E5ll+mlksd
+kfrqoyJjz+dj/TJzHh2ZPwbzu8Qx4hwxi++Yjs2c6r6mZ03UWk8fr1Xf5MiQ
+he/LfMdkzv0zj2P5csflWP3xwWqw1Y3JXaodOyHyvrM4IeOuTe3Bhl2rP4DF
+X4vlmo1Pz5z3Z/1PzrNYNPjXmd+5J3Vtb7JH2Jf4kOoVNsq51FOJ6dSIyUvJ
+SakxOzXr81B+m5xrmJFxvC753+X3Dwcbxxmd1jUu5YyMP5p3zv2SdcxJWTfj
+j3Ttu7CzglcMlrPGx56d9dGfE3xCsLkf61p92oyu+cwn5t5xmsZxKerkP5b1
+VLd2dubHf+PBzaEOhMwGme+jOVatmtiV78ovhXE+1uncrCEOCZekDk189oms
+FZlPZNz3a2rRxB04axhfrVZNDcfWWbfPZg39/unILxDsuLtyLvySmj3H4rVu
+zbH4K3G++g9xPQ7tcxkn8/nMPy0YNz7Bkw/N5/fdjWPVtokDvhAZPrBYXW2b
+c34u553g1YdWqyY+IMPfvi3jZOTS5ddxeOpKLsj64/XxYk/kvs7NWllj645z
+U8OCU5iS8Yuy/r7j+3IwTl7+QG0bPu2iHItnICOm0F8c/GzmdI+4/QvzfHFv
+MzMn+ZmZ8+5c5/PBcti4uD2Cnw++dPxcco9/zn1dGhnXKbfxQvAlufc7g8fn
++lrGb866mZPPwnfhr6g5xPt5FmK0y/PsPEcY743zU2OHAxSHqaUb8yRis7My
+Dquv862i+joxl1o6WHyk7u47wdOD5RTEZ1cMr31/AavH8/uVkZGDuDLjYj11
+ertn/u/mWN9CqsvDx7xr1PCeXavX+36wGj1YfIer/EHk1fXB41q+qyKDw7wq
+4+I5tX17dY2/EeOJ6YzD6v3U+slDy8/iONX84TnlPq7NuHoG9U/8czECefl2
+ORr1H3hX8Yj8h7jj8mDjeB51gOKI2XI+uQ/fcxkX0+lviIyYCJ4jx90YbFxu
+e5yDuCnjeBR5aFyKukHXqU7jiIzLa+BFb824ePPGnNext0RmWmRc/xUZx/k8
+kHvEcYlZ1CPio86KD82PE6/ISYtx5KJhcYP4QmwgLpgcLD8idhCfiCPI3JFx
+MvLTYgR5jTszLu+srpEP73sQ+OKu+fx3Z9z3nTAfUn9PMN8SJoucE59PxI+j
+9l2Wv2G1Tfxz+UFYjky+TAzA/xcH3Du8Vhup/h4fdVPXsG8VfFeuJlJsIp8C
+87fxYOr2xC++UYX5cnLLcsxj2ftzrJz1/Rn37e3teff4xg/mvk4Pf7Vc1/xk
+mG+sFkttJb/atwy/zvj1ORc/lq+oHo6fuWAwv1H/UMb5XPLc/B++EEwWV61m
+0l65SDAOWy5aTnrRjP0+MuoojfM99sv85vFNut/GNZV/iMzHcqy55a/VrMtZ
+y1PDcj1y3Gor5YYm6tOH5gOomX8k8vY+uR97kO/B1TeyyfKY5Md1lY8H8wfk
+cjaPTYbln+1xT2ae2zKna/l0jrVf2BPJqEGzD+LL2Ge1nXJO8k1s9tORsa/5
+zR4tH0VmvNc9m+tUE602Gj9nvqcz5/mRIa+2k4y8vHnJbZ3rlBuzL8/IveMN
+cAjycPLacrB/ix3ja6n7tC/73va5yKgL/UuO/Xrk5459+/vwWg4I942nemFo
+HPeY334+dgYPJq88a8bIjXPC8sRj7gvGaeMr1EHKn+KQ8FA4JbwWjI+SL5I3
+UquzZNbTOm+VcRw1XgWPM8EvZU6cFc5H/lh+GCeEJ7qka1wTDv3C2GHHssk4
+E/WXYy4EZtPYDjaFTcBX/CfnFeu/GnuyRWTYHDUt6inF+HKuvjPHjajPUY/N
+hlwdmaW79jeZlXIuc+IVjI1yrNyUHJU56Lj8rhzu7OE52Iczg8cchvhdPH5I
+YnkyYlLxqtpbsrMnxr8uc97StXPOkvO6TjnscW55jlzzbDnWnHxIuVjvpO+M
+zC825Ouqv9w4z8u64Xl8R+O79A27ljeeK/InZdw3N+q054mMeu/5Mv76jD+Q
+eciNY6l5I68GR13OOI8Nywv43xjmEU+p954/WP5Wrnriu/eh/WZ8Uq5fjCNH
+Jq/GVrg/1+zbqM9kfBwjyN/g8E/O/L/Kec3JZj4TGT4wX9268b19Z8HPw3Xj
+3dVvT4mNZ9/tv2yI/LfaHL8vGhn2TV75H7Fp8Oa5NnU5/NK7gl2n2gl1rmNO
+Hf5AbJd8s+83+JZyzOwTf1JejQ/JJ8Tj8/f4fjB/G8eOx+ebLTtqeK+u9f7m
+3/HN5Nj4Y3ww+Wb8ujyRfPA49wvzc/gpfB3+zG3Br4uf4HtI/KE9F+Yb4Bzk
+XPEVDwfjcMSCYsJHu7avydGOczHwBllzOQ85R7GpGHXiO6Wh2cepsamw+Ebs
+IPYY5zFWyjqclXOxsdbR9zDsudgKlpvg//J99wzmE8tTyifKBbK3LwfLHeAC
+1dHiA8U1a+a5qycxjkfEReGkcCf+R4H5+cYTdRl5V4+KzPGRXz34gtzvRA35
+0Dh0/PkZo/ZtHb4Il+971DmyR6wdGfLwzK7x1Xjwie9ngy+NXcVZs6X8QBj/
+rAYGz8sXwvXCat7wu75xxfGKhfh8Y39v/dg3/hs+l+3Fs8JjvhY/izPcOvi7
+sdW+QcXT4kTxrctkbTfMGrJv+FBcKE4UxqHiBdXH8KnY3smxk7hQfCvfDxcK
+s7f8N9+ILp819H98fPvoejbJte0efEP2JmvO5pvXml+TfrOsv2vYLOdlu/2/
+kben953matlrnMc+4nkb/0n6LSPjuW+Z98F3lHg331Tit/B3/MAjgvE3OEj8
+Lx4SVzc178yBGb8741Myj2O3yjy4SRzlPbHzU3LsARm/K++kOX+Za8DT4ZGm
+B98Xndoh+osXwrXhiE4Mvj/vjJjh4q75ePggXJAabbzMqV3jW+CnYnvxMvYs
+fh2MPzkz53qkaz6qeR6Lzdw5dlIsLGYWL18VfaNr4l3fqol/6d9uGYfJiF/5
+VGIw8Rd/f4/YtO9kzldi96Zl/LbIfKVr+4NrEPuP9wB+4125d7GPGEXcwk8Q
+f4hDxnmVvaNrvww2rl6Y/LJdiy3sNeIIPjg/m4/9SDB/+FPxR/mifFLYtdAF
+57o29mTCF++a/TwgNpP95HfyOcVe4rGxv3NQdFkeQZ59HOvAfAwcgPX8XsYO
+ybjvDtQC2SOey/zOZc8Ve9h/xRyw/Xe2HOs8D+VYcZ+8tjqWqbGxsL1ArbXv
+mthe33f4XwkHpj8iWK3CkVnDCdnIyy/Lx++UZ+d/YRibyO2M2nFviAxuhw9s
+TnUexo7JuBp73z3iW8Rr6u1Wz9j0jHt/YDnvW7v2bTl7hduH8fCOOzF6auy4
+yNDNEzLuePPuEb3G1+Pq/d+h4yPDFjl2h9yTe3OdW2V+18jmnRHb5X6s12x5
+t/EU1p4vd1KekedwSp6jtZ+RZ2HO03Je75Jxz0ee4tTMz+bB/ETznTx6ze+C
+58u1m4d9wrOdnvfHfsJvtqf4btFv9pxNc/3mPicyxufLNfNFzYEf4Zvpz46M
+9/b0jM+aOZ1LTH9WZD4c+dMzt3OQ/X+8mWfG
+             "]]]}, {}, {}, {}, {}},
+         VertexColors->{
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1]}], {}},
+       AspectRatio->1,
+       AxesLabel->{None, None},
+       AxesOrigin->{0., 0.},
+       DisplayFunction->Identity,
+       FrameLabel->{{None, None}, {None, None}},
+       FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+       GridLines->{None, None},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       ImagePadding->{{2.842170943040401*^-14, 1.}, {1., 
+        2.842170943040401*^-14}},
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic, "GridLinesInFront" -> True},
+       PlotRange->{All, All},
+       PlotRangeClipping->True,
+       PlotRangePadding->{{
+          Scaled[0.02], 
+          Scaled[0.02]}, {
+          Scaled[0.02], 
+          Scaled[0.02]}},
+       Ticks->{Automatic, Automatic}], {192., -576.}, 
+      ImageScaled[{0.5, 0.5}], {360., 360.}], InsetBox[
+      GraphicsBox[{GraphicsComplexBox[CompressedData["
+1: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
+
+         "], {
+          {GrayLevel[0.8], EdgeForm[None], 
+           GraphicsGroupBox[PolygonBox[CompressedData["
+1:eJxN3An4b1PVB/Bzzg+RMmUmrovM4zVluuZ5vKZQmfIab+ZZZg0KlSGZQgiv
+lFkTF4m8UiGlyFSRkiLxpvSuz93f/3Pf57Ht9d+/ffbZZ5+91vqu717nLrL3
+IZM+OXRdt/QMXTeq+od9121VZYYq21YZX+W/qv2Bqo+r8p4qP6pyUpWZqpxW
+5ZQqF1WfX1d9WdWXVtmx5EWrHFDyo3WD7UueucpHSn5fla9V+/P199VV719l
+lWq7s+ojq3y62k+u8o2Sl6lJ/bLkG0petuSdS/7vkidX/2Wr3FjyR6rtm1V/
+ssr1VQ6sMkuVo+r3FarcXPLrVX+iymElf6b6L17lupJXrLbbqj68ysol31H1
+EVU+W7/v2rfxP1DtR1W9QJXjSn6p2r9X8u1VxptXlX9V+w+qPrbK+fX7lKrv
+qXJrlUU8R5Udav6TqmxaZe/q84DxqtxVZbEqy1e5v8p9VRavcnb1+WHV363y
+ZI0/V5W7S76o2j9Q5cGSH8rYq1ZZPXNZrsoaqY05Z/X9cdUrVFkt/fU7ucab
+p8rDJZ9S9XxV/qfky6v/3FUeKfknGXtilbm8+6pXqvKx6vutqg+pske1f6fq
+o6tsPmr3WK/KVqM2jw2qrFP9X3SfKldV/yerfqLKJ0qer8rxJZ9RfRas8kt7
+oOr9qv2pkj9X8merPF3yb6ucmPFXqvHPqvZnS36uykm514bVvli1f67kL1T9
+Vo3zfMk3lrxplb/bK9X2UtWnVbmk2q6vv18u+TZ7qcorJZ9X7QeX/PuSny15
+wyofrL+vqfrrVV6z36p+u9r+WvJ/qv6buVfZpNo3rvKZkh+u9turjKtyq3Wr
+8r/VvlfVL1TbtSX/oOSZqgz2VtU9pSz5+1XurPJO/flI1UdWWaTKlvX7dFV/
+wZ4p+b6h6ewDVf9waHo6b5XH6/cPV9m65C9WvW+VjWp9Vqi//21udHNourxd
+1dsOTZcnRZf3q/LTajsj+kt36esHqvxsaDp+XslLDk33DqqyT8lLDE1/2Q/2
+YDZjVdtSQ9PlA6s+YGi6/PPs3fXtybxL73H36LU99vmSP1bllpKPqeuOjq7u
+G72myx+PXtPl26LH9JNdOSo6dkH9fm90c/Wh6bZ9e2zVe2Yfn1Dy8UPT8TFd
+Mr/lR02v6TQdXjbj0+m70ve+6Jx7ndM3faa/t0fv2IIvR/fp8kl1n08NTZcn
+jppej+n0atG9ZXN/f9O5Q6t8sGs6vUbud2J0+UfRwYm59tK+6S29/kvVP+2a
+Xv9qaDr+k6z/ehl/3+jm8dHf9XPvx/NO3O/Uoe0t+nt19JfO/nfV+1f5TcnX
+VX1F9HfNoentp6qsFX2lqwf07V175x+OftPts0s+MDp7fslfHpoOXkafqvzR
+O6jfb4rOfrHazo192Sc2k139WrVdPjRdfr7qP1d9hv1l7/RNl4/pmy58vtrv
+qvqw6PIR0WX6u1l0+bMlD1X/o2u25cqh2Zk/WZtaq9uHpuO3VX1LdPwOviP6
++0c+Ivr7/ZK/Gx0/scoOVc6tP39S9dnR0xNKXjHt21R9cdd88d113bF9sxU7
+l7xK1ZdU+67W2bqX/CE2qmu6OmfNbZbo7Xb1++Vd0+s9q21V9sz7z/qcXmWn
+aruwix+NPtnny1SfpatMNm7Vs7OPJe9Y9aQqXzW/qmcbmh1YrO57UMnLVTm0
+CqBxU7UvWe271bhXlXxttW0UW7pL5s6P7+Kd57k+V/XqVb5trw/tWejAUjXO
+RzP/xfrm28dVmXVoc56nykqZD1swIXOGMbavazcbtfYjq22OjDlr336nv6tm
+7mzHXKM2rjW5uG8+ld9csNrnTJ/Hqv5wtc/GPlf7FqO2n79Yf6/pndOf3AtO
+eKLqx82pfvtSlb3SZ46+7V9+9rWSl4l/vLbqiVV+ZZ2rftQeqTK55OX65st+
+XeO9XvL83qE9WPUfzC36R88/X+0LD+3vbWqOW4+aPi5U9UJDm/Mvopd0/uYa
+Y70qL5S8dv2+wND8+C3Vtn6V35X8jaoPytwWr3Euqj7rVpk4tDHtqxvY2urz
+uv4lj69yZsnnVH1Ixt+krt2Y3am2DTJPOvsl7yf3+or3m+f6g32inzXqm5+j
+LxvlPnzxi/X7v+rvhfo2J3q8LXvFf+Xvxat+M3o9fcnLV9+z6H7V73ZN3qLk
+PrZi5uozffzvFhmHvHnViwxtnK2iy9R86/rfo95zyYvU840b2pq/NbR9D2c+
+WPJKJc9Y5eCh6c6N0UP6CNN+qm843DiPV31+1V+usnJ0lvwQPzC0cdaBx/jt
+vmF2/afz3uv3J+rvr5S8Q8kT+qa/v+mbjeD74Qhjvr9rPlzb7GzLqPWHE57s
+m20iLzFqWMI4p/YtLjD+trFdM7AtQ8MY9Hrn6Dds8Ig9Un+/t2825tLca/vY
+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
+yRXED8j5IcPtC4xa7q+cHrmN8oucmToXlq+L85Qb5PwVf35fZNfOMmpnK7t3
+7XyFLG9kvlHLhzaWnCRj8yPGMy4cLlfXeSpcil+T+7dianOGUeXpOaO0z+FG
+/fGldHrB6DX8PHfm6bp58rwfHLWc3QVyn/lyretcD3PK2ZPbQy/0cz8YddFR
+y0+VEyP3Tw6PM69xo5ZD6295gM6/cONfjwzLye9znrh9yduOWi6vv+WIOQ8S
+L283ajms47NG1p3t3Sz3tIflUSyVd+G8SJ4enKlePOtszckfTb1YZHvJPrN3
+5GAskb00a2Qc1PXZQ/aPvULm+/g5+Su4Kfnp5NnTx76SbybvVV7Z/Omr3+TI
+y+TaAyNPzv5ZLnsP37t89sX/Dm1P2883ZY8ukP2+fPb8Wxl/9rSvkGtvi66O
+zX+lyNpXyjyd/6+cNbTOEyLLs1gl8z8m7UdmfYx5ePqvknZzXzX9/5q1nSnj
+aPd89Mn8cV/wBo7gK9lXa2cPy69bPX3oxBrRixMiy6l7OvvSnrQ3yfLZnF2v
+mX24cPalM21n3GtlH47LvpSXdXbue0rX8rWdde6Y+ayTdnmp8sn4gk0jb9c1
+LlqfjTKHiZmPs9/1MgftZHlxl2d8/uJr6X965rlB+su5kjc1a8bRzhewk3Rt
+t67lsW2c+ciJ2zi6YJwN0//q6NLO6btJ+r9/1J7B/D0H+bN5L9acvfpK+uOd
+xmecMzPOZrnXopFd65x48+ia9i3S5+7IX0j7lpHhWJwU3AsXy8Hi3ui/cdiE
+49IH1n0i+wRedc62Yd4jHCL/gS2SH2vd8Ni4VRzrTdFfOVh0Vt4a2XkN7IoT
+h3WdyW6fdrzTDrmXvjvmWpiXjO+SdyZH7cquXbdD2r3nhfIed8iYxoET4UXn
+P65zPf9lvjunXR8c98Fp3yl7AF+OW7+ia3h291z727TD0s43ds6zG3u36B0/
++dH0Z0/kw7EVsKKzajyYcyc4GAbGHeG15bnJ3dUflwUvy42Dn19If31waPh9
+uXBwPhvKfuLD3Peq9N8r47+Q8eFk9lX/b0TG+7O3+DJ5/uO6llNHnjtt+6Z9
+meTOeS9s/35Zt3nSznbB8PtkfGurz9i3Rfun/85Zc+v/vrwX6zZf+rBj8vEO
+iCxP0/kB2yv/zhkD3M5+s+Nj3yvpx55PtfeRv5lrcIb4Q+PgFdlp3y8dmvEn
+p325jONeN+Va95p6RjFMG+/Q/zfmocM0/2D/H53+h+dacYM49pjI2vGZCySP
+b6GuxbJHpN28jszc5Pv5++bsz+2y3/gOOQTyB3zf4Nx3QsY57v/dS9wydtZx
+bNrlGriW75AjLUeBbV8z18rBU7SLgxbLu7CeB2TNJ+f+x2ScCZHvyHUnZEx4
+xxk27CTucN48NTdu1OaNt4R9nGHDSDgu/eErfB3MwzetkTG/lzGNA0fBV66F
+0/CE1gFXhtM1Fq4M1mKv+Au+Rt6MnBl8Hd4Qhn89sngEn+ZsgJ2Dx5yFw2Yw
+vzhKDPXeUcNS28d+kvF4uC8x0pkZ89MZHzaH0d0XVjQmjIfPlFch5hqXfDA2
+9s3EY/ytPC95cut37W/95WDg1pxfPt81X3p25LfSfnL6fi7j49n0OaVrcZt5
+vtC1PHb5WmI0/ocfGsvv4oP5LzGR2AlHp+8Xh2l8JplPXjz9T+taDCf2c46k
+7fy0yzFz/Vg8dV7GOTTji8ucEZ2fa/W9IP2NeWH6a78w8xSjmTO/6RzqomHa
+d2dfzXvhc7Vvl/4X5FoYWB/YVX1x5Mey5jCM82r8pHVbKe9Iu3j2kowvbw3O
+gDHgXPlasK5vai5NH3vkssj6wiJwiPyWK3LfTTKOdt++fSN7aWL64zzhc+3O
+gy7NmHLnbs598WnO22EROATuuir76rnIr2aeV6S/GOGatMMd1+a+ZOO8lr19
+bWTjXxPZXK7LfNzfPKbm5vVNNr5vA+XEwS1iW3Hy2NkaWbyMgzUOnkEenWt8
+S7ho8ulgMLjpxozjfVl/fMJTWedNs7evz/zN7fqMKf6TbycelEcnF06OAWzI
+LryV+X87707brWmXK6i/+PqW6DIZbpK3xw6wK66BY+Ud3Bp9x4VenHlO5auH
+ludwVGL7s2IH5F3JuYX9vpN3517ujRPAAej/TtrvzPz/mP54YLmFcureyDp/
+L2vr2wd5cbCf/DF99u5arsXteUb8w115Lr9/P+OQ70l/XMIPhml8AhnnLJ/C
+vQBK/c0Dz7BW8vHel/5Txsbs2/hdeAj5f/gHfe/PPPHOvpHAB+I2cZ34Vefs
+cq2cG8r3+1HGl8+g/5dTPxAZT/tgxtT3oVyLeyTjb2Fj98WTm8ODacfRGmeM
+A4dZ4VUYk4wPh5MfjmyecgpxqqdnzmJWuNGZKE5SHgdOFoY8I+3yDI1pnAvS
+/9G064O3hSfx9vD92Hcxd2f9n0mfmbM+chbhN/n18uz5YvyG/EK5hTh856M4
+THym2O/o9H0i/eUhyndfopuWr79k9jObxV4dn/5+F8c8ljGdRboWlyLn/8nI
+8gvlGeI28Zxk3Kb8w19Fxpc+FV3mQ+U0nBBbpx1Xyfb+JvL+6UPWRzsby7aZ
+J87wtdi4rdLurIhdwhM618EZOhdiH9lAXCBOcCzuIYvvcI/PZEzfPT2fdjb1
+ufQXPz4fO+D7oJ9lv1kfa754xndGhRu8I7JrXfdCrnXGJM7cNeO9mHnCEr+L
+njorkRsx1pf8mejpS2mfLmO69l+Z9xnRwZeij2LM3+da/uLrWQe2UY4jv+Yb
+zJdjK+iFMww5Bfae/CScv7jSGcxYXsCfolN0xBmqcxAxnTwGcdZJaac7cDs+
+BQ6fkD7iO/kA2nEsj2ZMpgPPge9wtuA7oTey58VNzh58dyR+eT3t22eedMQc
+nK+ITcQjcp7EEWIl5wpiK/GFdnzR79PfnOUbyAWE1Z3N9smzVRzo+E4AXnVG
+hT+BycmwK0wuJ2nBtL+dPjjOfw9NX9X+FhfMEZk+wh0wIr5BfrHzeGfxYhlc
+lRhhj4wP88sXkPcwpWvzMk9n+ubnu4ZlUndp53t85zD13yMYNXmV6Kz7+f3P
+GXNc177Xdv3SuW6U/r4bteZiSnGu9yJudYY/XfKinVc4t3DOD8fKNXyhazjH
+mTo+xxmF83s4H6Z1rvB813CgcwL4DaaCxeGftzPO1rGNOHe6A9PqD8fCycYR
+UzizcC+Yyjmv/EWYhN8k48/hDdwNHAI/4JTxLnSKv6en/LLz7J1iT8jvRAfN
+gX12DiUnyXkZX03m3/k+/Pv0sTPeL5w29Zu5Uf4tgKFx4ng8cbZ4G6coBsfD
+3pB2shh8Kgc/aryleE0sbW+vnGv12T/t4mucHJ5OnHFV1lzsg8PxHSB+APdI
+njfXitVxkOIq8RXeTswqph3bs2R7GDfoexg84Trpv1H288J53lUypvkYZ/5c
+i9dxLW5nzqwD++m+YjTjPNe1b2bwijAtTntSnl3sOhbTk8WtU7nzUcOTbJ1r
+t4rNwQPScbGCeOa0rsUvZDGEdwdveY/WYdmsrfmK1ekgrDo+44vZjXlR7B4O
+BX/iXBbPwi45r8T7HJJrzQ1vx3bpc13e7zKjafbKfXEpMAN+DSaZFJnN9H3c
+8tFrc1k9e1hssVr2vPhGPCOWEYuLycXOck7IS8U+GMd5pZhL/PZi3t1K2TPi
+I+1iNLkE1mdqbsPQ1sT7lOO8QuZjPPKU6PKE6CZcv3qwPj/uuyAYwNmfOfNB
+cC/sPvbNCxkGhj/h2r3zvoz5+7xH3x2J++Bc38bA3jg2a35V1/g3Nou9YrfI
+7BUca0wY1fcXE2Pf4BqYBp6BX2AXuAW2hEfhxifTBy4aci27u07GMo5vL/07
+F76h9K08eXzXOD24AWaAHcj2izFcy8/IG3RGs0uei2/ml1+OPC44xPdRp3fh
+k0ftvWjbJO2/yvzZZHtDO5+vbBz7dkTmZ26LRL9wzmIrsaixxWJiab/73t2/
+bbFB177R980bvuLE/L1e1/4NjS3S7ns//X07eF/WEJ7HdWwZuyFPY62060OG
+K3zrZm6Ldu2bQ+Oumvtsnnv5ffv0sQbbZd3s3W1iN/BW+nhW3+NMSn/vZFLe
+kTl6tvW7ds3WeUb1Nmm3NtvG/rjvDnmv/wfRSIGz
+             "]]]}, {}, {}, {}, {}},
+         VertexColors->{
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[0, 0, 1], 
+           GrayLevel[1], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0], 
+           RGBColor[1, 0, 0]}], {}},
+       AspectRatio->1,
+       AxesLabel->{None, None},
+       AxesOrigin->{0., 0.},
+       DisplayFunction->Identity,
+       FrameLabel->{{None, None}, {None, None}},
+       FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+       GridLines->{None, None},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       ImagePadding->{{2.842170943040401*^-14, 1.}, {1., 
+        2.842170943040401*^-14}},
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, 
+         "DefaultGraphicsInteraction" -> {
+          "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+           "Effects" -> {
+            "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2},
+              "Droplines" -> {
+              "freeformCursorMode" -> True, 
+               "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+         "DefaultPlotStyle" -> Automatic, "GridLinesInFront" -> True},
+       PlotRange->{All, All},
+       PlotRangeClipping->True,
+       PlotRangePadding->{{
+          Scaled[0.02], 
+          Scaled[0.02]}, {
+          Scaled[0.02], 
+          Scaled[0.02]}},
+       Ticks->{Automatic, Automatic}], {576., -576.}, 
+      ImageScaled[{0.5, 0.5}], {360., 360.}]}}, {}},
+  ContentSelectable->True,
+  ImageSize->{
+    UpTo[600], 
+    UpTo[700]},
+  PlotRangePadding->{6, 5}]], "Output",
+ CellChangeTimes->{3.863158586752961*^9},
+ CellLabel->"Out[16]=",ExpressionUUID->"525d15b7-fd5f-4e89-b8ad-cd84c0b82f17"]
+}, Open  ]]
+},
+WindowSize->{1366, 677},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>0.9 Inherited,
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 283, 5, 26, "Input",ExpressionUUID->"55b756fb-83f2-4b70-a466-eb3fea27c174"],
+Cell[844, 27, 8341, 200, 639, "Input",ExpressionUUID->"42eedf99-709a-45de-aaf7-45deb0f6e2c4"],
+Cell[9188, 229, 2250, 56, 117, "Input",ExpressionUUID->"6f1b5f99-23a1-4378-8d2a-d0fcd9fce61f"],
+Cell[CellGroupData[{
+Cell[11463, 289, 235, 4, 26, "Input",ExpressionUUID->"dabe71d9-d89f-42dc-8473-87c310941096"],
+Cell[11701, 295, 228, 4, 30, "Output",ExpressionUUID->"e51ebb88-db59-4600-a753-e8786d2e555c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11966, 304, 605, 17, 26, "Input",ExpressionUUID->"5c283b24-1cf7-44b5-87e3-084ecc219757"],
+Cell[12574, 323, 160135, 4418, 589, "Output",ExpressionUUID->"525d15b7-fd5f-4e89-b8ad-cd84c0b82f17"]
+}, Open  ]]
+}
+]
+*)
+

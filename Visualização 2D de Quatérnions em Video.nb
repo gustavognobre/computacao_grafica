@@ -1,0 +1,237 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      7811,        229]
+NotebookOptionsPosition[      7420,        215]
+NotebookOutlinePosition[      7764,        230]
+CellTagsIndexPosition[      7721,        227]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[Alpha]", "=", 
+   RowBox[{"-", "5"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Tau]", "=", "16"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"c", "=", 
+   RowBox[{"{", 
+    RowBox[{"0.1", ",", 
+     RowBox[{"-", "0.875"}], ",", "0", ",", "0"}], "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.860924570065762*^9, 3.860924572525669*^9}, {
+  3.8609246045309415`*^9, 3.860924677911048*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"73e8e620-8b9d-45ff-9840-7513a566ce40"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"norm", "[", "q_", "]"}], ":=", 
+   RowBox[{"Dot", "[", 
+    RowBox[{"q", ",", "q"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"quatpower", "[", 
+    RowBox[{"{", 
+     RowBox[{"x_", ",", "y_", ",", "z_", ",", "w_"}], "}"}], "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox["w", "2"], "+", 
+         SuperscriptBox["x", "2"], "+", 
+         SuperscriptBox["y", "2"], "+", 
+         SuperscriptBox["z", "2"]}], ")"}], 
+       FractionBox["\[Alpha]", "2"]], 
+      RowBox[{"Cos", "[", 
+       RowBox[{"\[Alpha]", " ", 
+        RowBox[{"ArcCos", "[", 
+         FractionBox["x", 
+          SqrtBox[
+           RowBox[{
+            SuperscriptBox["w", "2"], "+", 
+            SuperscriptBox["x", "2"], "+", 
+            SuperscriptBox["y", "2"], "+", 
+            SuperscriptBox["z", "2"]}]]], "]"}]}], "]"}]}], ",", 
+     FractionBox[
+      RowBox[{"y", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["w", "2"], "+", 
+          SuperscriptBox["x", "2"], "+", 
+          SuperscriptBox["y", "2"], "+", 
+          SuperscriptBox["z", "2"]}], ")"}], 
+        FractionBox["\[Alpha]", "2"]], 
+       RowBox[{"Sin", "[", 
+        RowBox[{"\[Alpha]", " ", 
+         RowBox[{"ArcCos", "[", 
+          FractionBox["x", 
+           SqrtBox[
+            RowBox[{
+             SuperscriptBox["w", "2"], "+", 
+             SuperscriptBox["x", "2"], "+", 
+             SuperscriptBox["y", "2"], "+", 
+             SuperscriptBox["z", "2"]}]]], "]"}]}], "]"}]}], 
+      SqrtBox[
+       RowBox[{
+        SuperscriptBox["w", "2"], "+", 
+        SuperscriptBox["y", "2"], "+", 
+        SuperscriptBox["z", "2"]}]]], ",", 
+     FractionBox[
+      RowBox[{"z", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["w", "2"], "+", 
+          SuperscriptBox["x", "2"], "+", 
+          SuperscriptBox["y", "2"], "+", 
+          SuperscriptBox["z", "2"]}], ")"}], 
+        FractionBox["\[Alpha]", "2"]], 
+       RowBox[{"Sin", "[", 
+        RowBox[{"\[Alpha]", " ", 
+         RowBox[{"ArcCos", "[", 
+          FractionBox["x", 
+           SqrtBox[
+            RowBox[{
+             SuperscriptBox["w", "2"], "+", 
+             SuperscriptBox["x", "2"], "+", 
+             SuperscriptBox["y", "2"], "+", 
+             SuperscriptBox["z", "2"]}]]], "]"}]}], "]"}]}], 
+      SqrtBox[
+       RowBox[{
+        SuperscriptBox["w", "2"], "+", 
+        SuperscriptBox["y", "2"], "+", 
+        SuperscriptBox["z", "2"]}]]], ",", "\[IndentingNewLine]", 
+     FractionBox[
+      RowBox[{"w", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["w", "2"], "+", 
+          SuperscriptBox["x", "2"], "+", 
+          SuperscriptBox["y", "2"], "+", 
+          SuperscriptBox["z", "2"]}], ")"}], 
+        FractionBox["\[Alpha]", "2"]], 
+       RowBox[{"Sin", "[", 
+        RowBox[{"\[Alpha]", " ", 
+         RowBox[{"ArcCos", "[", 
+          FractionBox["x", 
+           SqrtBox[
+            RowBox[{
+             SuperscriptBox["w", "2"], "+", 
+             SuperscriptBox["x", "2"], "+", 
+             SuperscriptBox["y", "2"], "+", 
+             SuperscriptBox["z", "2"]}]]], "]"}]}], "]"}]}], 
+      SqrtBox[
+       RowBox[{
+        SuperscriptBox["w", "2"], "+", 
+        SuperscriptBox["y", "2"], "+", 
+        SuperscriptBox["z", "2"]}]]]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"QuatSet", "[", "q0_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"q", "=", "q0"}], ",", 
+       RowBox[{"i", "=", "1"}]}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"i", "<", "400"}], "&&", 
+         RowBox[{
+          RowBox[{"norm", "[", "q", "]"}], "<", "\[Tau]"}]}], ",", 
+        RowBox[{
+         RowBox[{"q", "=", 
+          RowBox[{
+           RowBox[{"quatpower", "[", "q", "]"}], "+", "c"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"i", "++"}]}]}], "]"}], ";", "\[IndentingNewLine]", "i"}]}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vQJSet", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"DensityPlot", "[", 
+      RowBox[{
+       RowBox[{"Log", "[", 
+        RowBox[{"QuatSet", "[", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "y", ",", "0", ",", "w"}], "}"}], "]"}], "]"}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", 
+          SqrtBox["\[Tau]"]}], ",", 
+         SqrtBox["\[Tau]"]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"-", 
+          SqrtBox["\[Tau]"]}], ",", 
+         SqrtBox["\[Tau]"]}], "}"}], ",", 
+       RowBox[{"PlotPoints", "\[Rule]", "200"}], ",", " ", 
+       RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+       RowBox[{"FrameStyle", "\[Rule]", 
+        RowBox[{"Thickness", "[", "Large", "]"}]}], ",", 
+       RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"\"\<q0\>\"", ",", "\"\<q1\>\""}], "}"}]}], ",", 
+       RowBox[{"RotateLabel", "\[Rule]", "False"}], ",", 
+       RowBox[{"BaseStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"FontSize", "\[Rule]", "14"}], "}"}]}], ",", 
+       RowBox[{"PlotRangePadding", "\[Rule]", "None"}], ",", 
+       RowBox[{"ColorFunction", "\[Rule]", "\"\<SolarColors\>\""}]}], "]"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"w", ",", 
+       RowBox[{"-", "4."}], ",", "4.", ",", "0.5"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<video_A.mov\>\"", ",", "vQJSet", ",", 
+   RowBox[{"\"\<FrameRate\>\"", "\[Rule]", "4"}], ",", 
+   RowBox[{"ImageResolution", "\[Rule]", "400"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "400"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.860924681069008*^9, 3.860924778781844*^9}, {
+  3.8609248440802937`*^9, 3.8609250835893307`*^9}, {3.8609251206709843`*^9, 
+  3.86092596576903*^9}, {3.860926010097398*^9, 3.8609260214869184`*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"fb879708-30d6-4d9c-831f-e279d1c62ccd"]
+},
+WindowSize->{1366, 534},
+WindowMargins->{{-8, Automatic}, {Automatic, 143}},
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 529, 13, 67, "Input",ExpressionUUID->"73e8e620-8b9d-45ff-9840-7513a566ce40"],
+Cell[1090, 35, 6326, 178, 592, "Input",ExpressionUUID->"fb879708-30d6-4d9c-831f-e279d1c62ccd"]
+}
+]
+*)
+
